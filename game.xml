@@ -1,5 +1,127 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<group>
-	<card>mycard1</card>
-	<card>mycard2</card>
-</group>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ENCOUNTERS>
+	<ENCOUNTER id="1">
+		<CHARACTER>ŞAMAN</CHARACTER>
+		<TEXT>Halk obada dolaşan hortlaklardan rahatsız, herkesi toplayıp büyük bir ayin düzenlememiz lazım.</TEXT>
+		<YES>
+			<TEXT>Hazırlıklara başlayın</TEXT>
+			<STAT_CHANGE>
+				<FAITH>1</FAITH>
+				<PEOPLE>0.5</PEOPLE>
+				<SECURITY>0</SECURITY>
+				<MONEY>-1</MONEY>
+			</STAT_CHANGE>
+			<FIRE_ENCOUNTER>4</FIRE_ENCOUNTER>
+		</YES>
+		<NO>
+			<TEXT>Saçma sapan söylentiler…</TEXT>
+			<STAT_CHANGE>
+				<FAITH>1</FAITH>
+				<PEOPLE>0.5</PEOPLE>
+				<SECURITY>0</SECURITY>
+				<MONEY>-1</MONEY>
+			</STAT_CHANGE>
+			<FIRE_ENCOUNTER>NONE</FIRE_ENCOUNTER>
+		</NO>
+	</ENCOUNTER>
+	<ENCOUNTER id="2">
+		<CHARACTER>ORDU_BAŞI</CHARACTER>
+		<TEXT>Karşı beyliğin yeni kılıçlar dövdüğünü duydum, biz de demircilerimize yatırım yapmalıyız.</TEXT>
+		<YES>
+			<TEXT>Hemen.</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0</FAITH>
+				<PEOPLE>0</PEOPLE>
+				<SECURITY>0.5</SECURITY>
+				<MONEY>-0.5</MONEY>
+			</STAT_CHANGE>
+			<FIRE_ENCOUNTER>3</FIRE_ENCOUNTER>
+		</YES>
+		<NO>
+			<TEXT>Gerek yok</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0</FAITH>
+				<PEOPLE>0</PEOPLE>
+				<SECURITY>-0.5</SECURITY>
+				<MONEY>0.5</MONEY>
+			</STAT_CHANGE>
+			<FIRE_ENCOUNTER>NONE</FIRE_ENCOUNTER>
+		</NO>
+	</ENCOUNTER>
+	<ENCOUNTER id="3" continuation="true">
+		<CHARACTER>AŞÇI</CHARACTER>
+		<TEXT>Beyim, obanın bu paraya ihtiyacı var, kılıçlar yerine fakirlerin karnını doyurmak için çorba kazanı açalım</TEXT>
+		<YES>
+			<TEXT>Haklısın</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0</FAITH>
+				<PEOPLE>0.5</PEOPLE>
+				<SECURITY>-0.5</SECURITY>
+				<MONEY>0</MONEY>
+			</STAT_CHANGE>
+			<FIRE_ENCOUNTER>NONE</FIRE_ENCOUNTER>
+		</YES>
+		<NO>
+			<TEXT>Hayır</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0</FAITH>
+				<PEOPLE>0</PEOPLE>
+				<SECURITY>0</SECURITY>
+				<MONEY>0</MONEY>
+			</STAT_CHANGE>
+			<FIRE_ENCOUNTER>NONE</FIRE_ENCOUNTER>
+		</NO>
+	</ENCOUNTER>
+
+	<ENCOUNTER id="4">
+		<CHARACTER>ŞAMAN</CHARACTER>
+		<TEXT>Beyim, al karısı obadaki bir kadına musallat olmuş, yanına 40 gün boyunca yalnız kalmaması lazım.</TEXT>
+		<YES>
+			<TEXT>Askerlerden birini gönder</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>-0.5</SECURITY>
+				<MONEY>0</MONEY>
+			</STAT_CHANGE>
+			<FIRE_ENCOUNTER>NONE</FIRE_ENCOUNTER>
+		</YES>
+		<NO>
+			<TEXT>Sen ilgilen</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.5</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0</SECURITY>
+				<MONEY>-0.5</MONEY>
+			</STAT_CHANGE>
+			<FIRE_ENCOUNTER>NONE</FIRE_ENCOUNTER>
+		</NO>
+	</ENCOUNTER>
+
+	<ENCOUNTER id="5">
+		<CHARACTER>ŞAMAN</CHARACTER>
+		<TEXT>Beyim, obaya büyük bir mabed yaparsak halkımızın inancını güçlü tutarız, en zor zamanlarda bile.</TEXT>
+		<YES>
+			<TEXT>İnşaata başlayın</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.5</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>-2.0</MONEY>
+			</STAT_CHANGE>
+			<FIRE_ENCOUNTER>NONE</FIRE_ENCOUNTER>
+			<CONSTRUCTION>construction_temple</CONSTRUCTION>
+		</YES>
+		<NO>
+			<TEXT>Hayır</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+			<FIRE_ENCOUNTER>NONE</FIRE_ENCOUNTER>
+		</NO>
+	</ENCOUNTER>
+    
+</ENCOUNTERS>
