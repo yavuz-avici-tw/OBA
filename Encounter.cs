@@ -10,8 +10,8 @@ class Encounter
     private bool _isLocked { get; }
     private bool _isContinuation { get; }
 
-    Action yes;
-    Action no;
+    private Action _yes;
+    private Action _no;
 
     public Encounter(int id, string character, string text, Action yes, Action no, bool isLocked = false, bool isContinuation = false)
     {
@@ -20,8 +20,8 @@ class Encounter
         _text = text;
         _isLocked = isLocked;
         _isContinuation = isContinuation;
-        this.yes = yes;
-        this.no = no;
+        _yes = yes;
+        _no = no;
     }
 
     public void print_debug()
@@ -32,10 +32,10 @@ class Encounter
 }
 class Action
 {
-    string _text;
-    StatChange _statChange;
-    int _fireEncounterId;
-    Encounter _fireEncounter;
+    private string _text;
+    private StatChange _statChange;
+    private int _fireEncounterId;
+    private Encounter _fireEncounter;
 
     public Action(string text, StatChange statChange, int fireEncounterId = -1, Encounter fireEncounter = null)
     {
