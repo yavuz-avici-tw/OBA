@@ -124,4 +124,97 @@
 		</NO>
 	</ENCOUNTER>
     
+	<ENCOUNTER id="6">
+		<CHARACTER>SEYİS</CHARACTER>
+		<TEXT>Atların diri kalması için tahılımızın bir kısmını ayırmamız lazım.</TEXT>
+		<YES>
+			<TEXT>Tamam</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>-0.5</PEOPLE>
+				<SECURITY>0.5</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+			
+		</YES>
+		<NO>
+			<TEXT>Hayır, obanın ihtiyacı var</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.5</PEOPLE>
+				<SECURITY>-0.5</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+
+	<ENCOUNTER id="7">
+		<CHARACTER>HATUN</CHARACTER>
+		<TEXT>Beyim... bu akşamki toy için hangi elbiseyi giyeyim?</TEXT>
+		<YES>
+			<TEXT>Mavi</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+			
+		</YES>
+		<NO>
+			<TEXT>Kırmızı</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+	<ENCOUNTER id="8">
+		<CHARACTER>ORDU BAŞI</CHARACTER>
+		<TEXT>Askerlerimizin birçoğu yaşlı, genç nüfusun ilgisini çekmeliyiz</TEXT>
+		<YES>
+			<TEXT>Haklısın.</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0</FAITH>
+				<PEOPLE>0</PEOPLE>
+				<SECURITY>0.5</SECURITY>
+				<MONEY>-0.5</MONEY>
+			</STAT_CHANGE>
+			
+		</YES>
+		<NO>
+			<TEXT>Gerek yok</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0</FAITH>
+				<PEOPLE>0.5</PEOPLE>
+				<SECURITY>-0.5</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+	<ENCOUNTER id="9">
+		<CHARACTER>HALKTAN BİRİ</CHARACTER>
+		<TEXT>Beyim, din adamları sürekli bağış topluyor ancak halkın karnı hala aç</TEXT>
+		<YES>
+			<TEXT>Haklısın.</TEXT>
+			<STAT_CHANGE>
+				<FAITH>-1.0</FAITH>
+				<PEOPLE>0.5</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+			
+		</YES>
+		<NO>
+			<TEXT>Din kutsaldır</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.5</FAITH>
+				<PEOPLE>-1.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.5</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
 </ENCOUNTERS>
