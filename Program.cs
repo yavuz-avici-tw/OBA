@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 
 class Program
 {
-    static void Main()
+    private static void Main()
     {
         Console.WriteLine("Type GameController.initialize() to initialize the game");
         GameController.initialize();
