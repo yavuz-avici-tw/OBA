@@ -46,8 +46,10 @@ namespace OBA
         private static Encounter parseEncounter(XElement encounterElement)
         {
             int id;
+            float probabilityModifier;
             bool isLocked;
             bool isContinuation;
+            bool isOneTime;
             string? character;
             string? text;
             if (!int.TryParse(encounterElement.Attribute("id")?.Value.ToString(), out id))
@@ -61,6 +63,14 @@ namespace OBA
             if (!bool.TryParse(encounterElement.Attribute("continuation")?.Value.ToString(), out isContinuation))
             {
                 isContinuation = false;
+            }
+            if (!bool.TryParse(encounterElement.Attribute("isOneTime")?.Value.ToString(), out isOneTime))
+            {
+                isOneTime = false;
+            }
+            if (!float.TryParse(encounterElement.Attribute("probabilityModifier")?.Value, out probabilityModifier))
+            {
+                probabilityModifier = 1.0f;
             }
             character = encounterElement.Element("CHARACTER")?.Value.ToString();
             text = encounterElement.Element("TEXT")?.Value.ToString();
@@ -85,7 +95,7 @@ namespace OBA
 
             Action yes = parseAction(yesElement);
             Action no = parseAction(noElement);
-            return new Encounter(id, character, text,  yes, no, isLocked, isContinuation);
+            return new Encounter(id, character, text,  yes, no, probabilityModifier, isLocked, isContinuation, isOneTime);
         }
         private static Action parseAction(XElement actionElement)
         {

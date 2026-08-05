@@ -21,7 +21,7 @@
 				<SECURITY>0</SECURITY>
 				<MONEY>-1</MONEY>
 			</STAT_CHANGE>
-			<FIRE_ENCOUNTER>NONE</FIRE_ENCOUNTER>
+			
 		</NO>
 	</ENCOUNTER>
 	<ENCOUNTER id="2">
@@ -45,7 +45,7 @@
 				<SECURITY>-0.5</SECURITY>
 				<MONEY>0.5</MONEY>
 			</STAT_CHANGE>
-			<FIRE_ENCOUNTER>NONE</FIRE_ENCOUNTER>
+			
 		</NO>
 	</ENCOUNTER>
 	<ENCOUNTER id="3" continuation="true">
@@ -59,7 +59,7 @@
 				<SECURITY>-0.5</SECURITY>
 				<MONEY>0</MONEY>
 			</STAT_CHANGE>
-			<FIRE_ENCOUNTER>NONE</FIRE_ENCOUNTER>
+			
 		</YES>
 		<NO>
 			<TEXT>Hayır</TEXT>
@@ -69,7 +69,7 @@
 				<SECURITY>0</SECURITY>
 				<MONEY>0</MONEY>
 			</STAT_CHANGE>
-			<FIRE_ENCOUNTER>NONE</FIRE_ENCOUNTER>
+			
 		</NO>
 	</ENCOUNTER>
 
@@ -84,7 +84,7 @@
 				<SECURITY>-0.5</SECURITY>
 				<MONEY>0</MONEY>
 			</STAT_CHANGE>
-			<FIRE_ENCOUNTER>NONE</FIRE_ENCOUNTER>
+			
 		</YES>
 		<NO>
 			<TEXT>Sen ilgilen</TEXT>
@@ -94,7 +94,7 @@
 				<SECURITY>0</SECURITY>
 				<MONEY>-0.5</MONEY>
 			</STAT_CHANGE>
-			<FIRE_ENCOUNTER>NONE</FIRE_ENCOUNTER>
+			
 		</NO>
 	</ENCOUNTER>
 
@@ -109,7 +109,7 @@
 				<SECURITY>0.0</SECURITY>
 				<MONEY>-2.0</MONEY>
 			</STAT_CHANGE>
-			<FIRE_ENCOUNTER>NONE</FIRE_ENCOUNTER>
+			
 			<CONSTRUCTION>construction_temple</CONSTRUCTION>
 		</YES>
 		<NO>
@@ -120,7 +120,6 @@
 				<SECURITY>0</SECURITY>
 				<MONEY>0.0</MONEY>
 			</STAT_CHANGE>
-			<FIRE_ENCOUNTER>NONE</FIRE_ENCOUNTER>
 		</NO>
 	</ENCOUNTER>
     
@@ -509,6 +508,79 @@
 				<PEOPLE>0.0</PEOPLE>
 				<SECURITY>-0.5</SECURITY>
 				<MONEY>0.5</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+	<ENCOUNTER id="22">
+		<CHARACTER>ELÇİ</CHARACTER>
+		<TEXT>Karşı beylik cüzi bir miktar karşılığı bizden koruma talep ediyor, kabul edersek insanlarımız rahatsız olabilir</TEXT>
+		<YES>
+			<TEXT>Askerleri gönderin.</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>-0.5</PEOPLE>
+				<SECURITY>-0.5</SECURITY>
+				<MONEY>1.0</MONEY>
+			</STAT_CHANGE>
+			
+		</YES>
+		<NO>
+			<TEXT>Bir şey yapamayız.</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.5</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+
+	<ENCOUNTER id="23" probabilityModifier="0.1" isOneTime="true">
+		<CHARACTER>ELÇİ</CHARACTER>
+		<TEXT>Karşı beylik askeri ve ekonomik müttefiklik teklif ediyor, bu harika bir fırsat olabilir</TEXT>
+		<YES>
+			<TEXT>İyi</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+			<UNLOCK_ENCOUNTERS>
+				<ENCOUNTER>41131<ENCOUNTER>
+			</UNLOCK_ENCOUNTERS>
+		</YES>
+		<NO>
+			<TEXT>Onlara güvenemeyiz</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+
+	<ENCOUNTER id="41131">
+		<CHARACTER>MÜTTEFİK BEYLİK</CHARACTER>
+		<TEXT>Az uzağımızdaki beylik hali hazırda savaşta, pastadan biz de bir dilim almalıyız.</TEXT>
+		<YES>
+			<TEXT>Askerleri gönderin.</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>-0.5</SECURITY>
+				<MONEY>1.0</MONEY>
+			</STAT_CHANGE>
+			
+		</YES>
+		<NO>
+			<TEXT>Bu doğru değil</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.5</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>-0.5</MONEY>
 			</STAT_CHANGE>
 		</NO>
 	</ENCOUNTER>

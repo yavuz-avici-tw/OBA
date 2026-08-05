@@ -8,11 +8,12 @@ internal class Encounter
     public string Text { get; }
     public bool IsLocked { get; }
     public bool IsContinuation { get; }
-
     public Action yes;
     public Action no;
+    public float ProbabilityModifier { get; }
+    public bool IsOneTime { get; }
 
-    public Encounter(int id, string character, string text, Action yes, Action no, bool isLocked = false, bool isContinuation = false)
+    public Encounter(int id, string character, string text, Action yes, Action no, float probabilityModifier=1.0f, bool isLocked = false, bool isContinuation = false, bool isOneTime = false)
     {
         Id = id;
         Character = character;
@@ -21,6 +22,8 @@ internal class Encounter
         IsContinuation = isContinuation;
         this.yes = yes;
         this.no = no;
+        ProbabilityModifier = probabilityModifier;
+        IsOneTime = isOneTime;
     }
 }
 internal class Action
