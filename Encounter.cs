@@ -1,4 +1,7 @@
-﻿class Encounter
+﻿using System.Diagnostics;
+
+
+class Encounter
 {
     private int _id;
     private string _character { get; }
@@ -10,7 +13,7 @@
     Action yes;
     Action no;
 
-    public Encounter(int id, string character, string text, bool isLocked, bool isContinuation, Action yes, Action no)
+    public Encounter(int id, string character, string text, Action yes, Action no, bool isLocked = false, bool isContinuation = false)
     {
         _id = id;
         _character = character;
@@ -19,6 +22,11 @@
         _isContinuation = isContinuation;
         this.yes = yes;
         this.no = no;
+    }
+
+    public void print_debug()
+    {
+        Console.WriteLine(_text + "\n" + _id + "\n" + _character + "\n" + _isLocked.ToString() + "\n" + _isContinuation.ToString() + "\n" );
     }
 
 }
