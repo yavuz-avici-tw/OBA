@@ -21,7 +21,6 @@ internal class Encounter
         IsContinuation = isContinuation;
         this.yes = yes;
         this.no = no;
-    }
 }
 internal class Action
 {

@@ -25,7 +25,7 @@
 		</NO>
 	</ENCOUNTER>
 	<ENCOUNTER id="2">
-		<CHARACTER>ORDU_BAŞI</CHARACTER>
+		<CHARACTER>ORDU BAŞI</CHARACTER>
 		<TEXT>Karşı beyliğin yeni kılıçlar dövdüğünü duydum, biz de demircilerimize yatırım yapmalıyız.</TEXT>
 		<YES>
 			<TEXT>Hemen.</TEXT>
@@ -124,4 +124,349 @@
 		</NO>
 	</ENCOUNTER>
     
+	<ENCOUNTER id="6">
+		<CHARACTER>SEYİS</CHARACTER>
+		<TEXT>Atların diri kalması için tahılımızın bir kısmını ayırmamız lazım.</TEXT>
+		<YES>
+			<TEXT>Tamam</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>-0.5</PEOPLE>
+				<SECURITY>0.5</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+			
+		</YES>
+		<NO>
+			<TEXT>Hayır, obanın ihtiyacı var</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.5</PEOPLE>
+				<SECURITY>-0.5</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+
+	<ENCOUNTER id="7">
+		<CHARACTER>HATUN</CHARACTER>
+		<TEXT>Beyim... bu akşamki toy için hangi elbiseyi giyeyim?</TEXT>
+		<YES>
+			<TEXT>Mavi</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+			
+		</YES>
+		<NO>
+			<TEXT>Kırmızı</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+	<ENCOUNTER id="8">
+		<CHARACTER>ORDU BAŞI</CHARACTER>
+		<TEXT>Askerlerimizin birçoğu yaşlı, genç nüfusun ilgisini çekmeliyiz</TEXT>
+		<YES>
+			<TEXT>Haklısın.</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0</FAITH>
+				<PEOPLE>0</PEOPLE>
+				<SECURITY>0.5</SECURITY>
+				<MONEY>-0.5</MONEY>
+			</STAT_CHANGE>
+			
+		</YES>
+		<NO>
+			<TEXT>Gerek yok</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0</FAITH>
+				<PEOPLE>0.5</PEOPLE>
+				<SECURITY>-0.5</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+	<ENCOUNTER id="9">
+		<CHARACTER>HALKTAN BİRİ</CHARACTER>
+		<TEXT>Beyim, din adamları sürekli bağış topluyor ancak halkın karnı hala aç</TEXT>
+		<YES>
+			<TEXT>Haklısın.</TEXT>
+			<STAT_CHANGE>
+				<FAITH>-1.0</FAITH>
+				<PEOPLE>0.5</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+			
+		</YES>
+		<NO>
+			<TEXT>Din kutsaldır</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.5</FAITH>
+				<PEOPLE>-1.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.5</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+	<ENCOUNTER id="10">
+		<CHARACTER>VALİ</CHARACTER>
+		<TEXT>İşçiler greve girdi, tez vakitte maaşlarını istiyorlar</TEXT>
+		<YES>
+			<TEXT>Akçe kesemi getirin</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>1.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>-0.5</MONEY>
+			</STAT_CHANGE>
+			
+		</YES>
+		<NO>
+			<TEXT>Askerleri salın</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>-1.0</PEOPLE>
+				<SECURITY>-0.5</SECURITY>
+				<MONEY>1.0</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+	<ENCOUNTER id="11">
+		<CHARACTER>VALİ</CHARACTER>
+		<TEXT>Acil durum. Obadaki çadırlar alev almış, ortalık karışık</TEXT>
+		<YES>
+			<TEXT>Sivillere yardım edin</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>-0.5</SECURITY>
+				<MONEY>-1.0</MONEY>
+			</STAT_CHANGE>
+			
+		</YES>
+		<NO>
+			<TEXT>Alevi söndürün</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>-1.0</PEOPLE>
+				<SECURITY>-0.5</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+	<ENCOUNTER id="12">
+		<CHARACTER>VALİ</CHARACTER>
+		<TEXT>Diğer beyliklerden birinin köyü talan edilmiş, bir grup göçmen bize doğru akın ediyor</TEXT>
+		<YES>
+			<TEXT>Gelsinler</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>1.0</PEOPLE>
+				<SECURITY>-0.5</SECURITY>
+				<MONEY>-0.5</MONEY>
+			</STAT_CHANGE>
+			
+		</YES>
+		<NO>
+			<TEXT>Dışarıda tutun</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>-0.5</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.5</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+	<ENCOUNTER id="13">
+		<CHARACTER>AŞÇI</CHARACTER>
+		<TEXT>Beyim, kımız stoklarımız bitmek üzere, yenilensin ister misiniz? Ordu başı sürekli kımız istiyor.</TEXT>
+		<YES>
+			<TEXT>Olur</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0.5</SECURITY>
+				<MONEY>-0.5</MONEY>
+			</STAT_CHANGE>
+			
+		</YES>
+		<NO>
+			<TEXT>Hayır</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+	<ENCOUNTER id="14">
+		<CHARACTER>VALİ</CHARACTER>
+		<TEXT>Bu ay toprak mahsulü iyi, tımarların vergilerini arttıralım mı?</TEXT>
+		<YES>
+			<TEXT>Birazcık.</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>-0.5</MONEY>
+			</STAT_CHANGE>
+			
+		</YES>
+		<NO>
+			<TEXT>İki katına çıkarın</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>-0.5</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>1.0</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+	<ENCOUNTER id="15">
+		<CHARACTER>ORDU BAŞI</CHARACTER>
+		<TEXT>Savaşta esir düşürdüğümüz askerlerle napalım?</TEXT>
+		<YES>
+			<TEXT>Köle pazarında satın.</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.5</MONEY>
+			</STAT_CHANGE>
+			
+		</YES>
+		<NO>
+			<TEXT>Bildiklerine ihtiyacımız var</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0.5</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+	<ENCOUNTER id="15">
+		<CHARACTER>ORDU BAŞI</CHARACTER>
+		<TEXT>Savaşta esir düşürdüğümüz askerlerle napalım?</TEXT>
+		<YES>
+			<TEXT>Köle pazarında satın.</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.5</MONEY>
+			</STAT_CHANGE>
+			
+		</YES>
+		<NO>
+			<TEXT>Bildiklerine ihtiyacımız var</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0.5</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+	<ENCOUNTER id="16">
+		<CHARACTER>ŞAMAN</CHARACTER>
+		<TEXT>Dini turizm bize son zamanlarda iyi gelir sağladı, yatırımı nereye yapalım?</TEXT>
+		<YES>
+			<TEXT>Hepsi hazineye</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>1.0</MONEY>
+			</STAT_CHANGE>
+			
+		</YES>
+		<NO>
+			<TEXT>Yatırımı paylaştıralım</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.5</FAITH>
+				<PEOPLE>0.5</PEOPLE>
+				<SECURITY>0.5</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+	<ENCOUNTER id="17">
+		<CHARACTER>ŞAMAN</CHARACTER>
+		<TEXT>Halk arasında yeni bir peygamber olduğunu söyleyerek dolaşan biri var, bu olaya bir el atmamız lazım.</TEXT>
+		<YES>
+			<TEXT>Sallandırın</TEXT>
+			<STAT_CHANGE>
+				<FAITH>1.0</FAITH>
+				<PEOPLE>-1.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+			
+		</YES>
+		<NO>
+			<TEXT>Bırakın dolaşsın</TEXT>
+			<STAT_CHANGE>
+				<FAITH>-1.0</FAITH>
+				<PEOPLE>0.5</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+	<ENCOUNTER id="18">
+		<CHARACTER>VALİ</CHARACTER>
+		<TEXT>Halkı salgın tutmuş, bir şeyler yapmazsak bütün obayı kaybedeceğiz</TEXT>
+		<YES>
+			<TEXT>Ortadan kaldırın</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>-1.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+		</YES>
+		<NO>
+			<TEXT>Şifacı şamanları getirin</TEXT>
+			<STAT_CHANGE>
+				<FAITH>-0.5</FAITH>
+				<PEOPLE>0.5</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>-0.5</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+	<ENCOUNTER id="19">
+		<CHARACTER>ŞAMAN</CHARACTER>
+		<TEXT>Karanlık... geleceğimizde karanlık şeyler görüyorum...</TEXT>
+		<YES>
+			<TEXT>Saçmalama</TEXT>
+			<STAT_CHANGE>
+				<FAITH>-0.5</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.0</MONEY>
+			</STAT_CHANGE>
+		</YES>
+		<NO>
+			<TEXT>Sana lazım olan şeyi biliyorum</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>-0.5</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+	
 </ENCOUNTERS>
