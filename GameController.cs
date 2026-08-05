@@ -1,35 +1,109 @@
 ﻿using OBA;
 using System.Data.SqlTypes;
 using System.Xml.Linq;
+using System.Linq;
+using System.Security.Cryptography;
 
-public class GameController
+public partial class GameController
 {
-    private GameState gameState;
+    private Random _rnd;
+    private GameState _gameState;
 
-   
-    
-    private XDocument xdoc;
-    private List<Encounter> encounters;
-    private static GameController singleton;
+    // xml document object for loading encounters
+    private XDocument _xdoc;
+
+    // Encounters and active encounters
+    private List<Encounter> _encounters;
+    private List<Encounter> _activeEncounters;
+
+    // GameControlle must be instantiated only once
+    private static GameController _singleton;
     private GameController()
     {
-      
-        encounters = GameData.getEncountersFromXmlData(GameData.gameXML);
-        foreach (Encounter enc in encounters)
-        {
-            enc.print_debug();
-        }
+        _encounters = GameData.getEncountersFromXmlData(GameData.gameXML);
+        _activeEncounters = _encounters.Where(enc => enc.IsLocked == false && enc.IsContinuation == false).ToList();
+        _rnd = new Random();
+
+        // selecting random encounter from active ones
+        int randNum = _rnd.Next(_activeEncounters.Count);
+        _gameState = new GameState(_activeEncounters[randNum]);
+
+        // initialize the player
+        Player.SetGameController(this);
     }
 
-    public static string initialize()
+    public static void initialize()
     {
-        if (singleton == null)
+        if (_singleton == null)
         {
-            singleton = new GameController();
-            return "Hello traveler.";
-        } 
-        
-        return "Game already initialized";
-        
+            _singleton = new GameController();
+            Player.GetInfo();
+
+            return;
+        }
+        return;
     }
+
+    internal void PlayerAction(ActionType actionType)
+    {
+        if (actionType == ActionType.left)
+        {
+            LeftAction();
+        }
+        else if (actionType == ActionType.right)
+        {
+            RightAction();
+        }
+    }
+    private void LeftAction()
+    {
+        float newFaith = _gameState.ActiveEncounter.yes._statChange.Faith + _gameState.faith;
+        float newPeople = _gameState.ActiveEncounter.yes._statChange.People + _gameState.people;
+        float newMoney = _gameState.ActiveEncounter.yes._statChange.Money + _gameState.money;
+        float newSecurity = _gameState.ActiveEncounter.yes._statChange.Security + _gameState.security;
+        Encounter nextEncounter;
+
+        int fireEncounterId = _gameState.ActiveEncounter.yes._fireEncounterId;
+
+        if (fireEncounterId != -1)
+        {
+            nextEncounter = _activeEncounters[fireEncounterId];
+        }
+        else
+        {
+            int randNum = _rnd.Next(_activeEncounters.Count);
+            nextEncounter = _activeEncounters[randNum];
+        }
+
+        _gameState.SetState(newFaith, newPeople, newMoney, newSecurity, nextEncounter);
+    }
+
+    private void RightAction()
+    {
+        float newFaith = _gameState.ActiveEncounter.no._statChange.Faith + _gameState.faith;
+        float newPeople = _gameState.ActiveEncounter.no._statChange.People + _gameState.people;
+        float newMoney = _gameState.ActiveEncounter.no._statChange.Money + _gameState.money;
+        float newSecurity = _gameState.ActiveEncounter.no._statChange.Security + _gameState.security;
+        Encounter nextEncounter;
+
+        int fireEncounterId = _gameState.ActiveEncounter.no._fireEncounterId;
+
+        if (fireEncounterId != -1)
+        {
+            nextEncounter = _activeEncounters[fireEncounterId];
+        }
+        else
+        {
+            int randNum = _rnd.Next(_activeEncounters.Count);
+            nextEncounter = _activeEncounters[randNum];
+        }
+
+        _gameState.SetState(newFaith, newPeople, newMoney, newSecurity, nextEncounter);
+    }
+
+    public void PrintStatus()
+    {
+        _gameState.PrintStatus();
+    }
+
 }

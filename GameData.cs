@@ -79,6 +79,12 @@ namespace OBA
             float stat_people;
             float stat_security;
             float stat_money;
+            int fire_encounter;
+
+            if (!int.TryParse(actionElement.Element("FIRE_ENCOUNTER")?.Value.ToString(), out fire_encounter))
+            {
+                fire_encounter = -1;
+            }
             if (!float.TryParse(actionElement.Element("STAT_CHANGE")?.Element("FAITH")?.Value, out stat_faith))
             {
                 Console.Error.WriteLine("ERROR::PARSING::ENCOUNTER::ACTION::FAITH_MUST_BE_A_FLOATING_POINT_NUMBER");
