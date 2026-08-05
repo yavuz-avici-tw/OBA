@@ -1,4 +1,4 @@
-﻿class PlayerController
+﻿public class PlayerController
 {
     public void left()
     {
