@@ -43,9 +43,28 @@ internal class GameState
         else { 
             Console.WriteLine($"---{ActiveEncounter.Character}---");
             Console.WriteLine($"{ActiveEncounter.Text}\n");
-            Console.WriteLine($"Player.Left()  for {ActiveEncounter.yes._text}");
-            Console.WriteLine($"Player.Right() for {ActiveEncounter.no._text}");
+            int maxLength = Math.Max(ActiveEncounter.yes._text.Length, ActiveEncounter.no._text.Length);
+            string yesText = new string(ActiveEncounter.yes._text);
+            string noText = new string(ActiveEncounter.no._text);
+            yesText =yesText.PadRight(maxLength);
+            noText =noText.PadRight(maxLength); //⚫ • - -
+            string yesEffects = getEffectStringOfAction(ActiveEncounter.yes);
+            string noEffects = getEffectStringOfAction(ActiveEncounter.no);
+            Console.WriteLine($"Player.Left()  for {yesText}     Effects: "+yesEffects);
+            Console.WriteLine($"Player.Right() for {noText}     Effects: "+noEffects);
         }
+        
+    }
+    private string getEffectStringOfAction(Action action)
+    {
+        return getEffectStringOfStat(action._statChange.Faith) +
+            getEffectStringOfStat(action._statChange.People) +
+            getEffectStringOfStat(action._statChange.Money) +
+            getEffectStringOfStat(action._statChange.Security);
+    }
+    private string getEffectStringOfStat(float stat)
+    {
+        return ((stat > 0.51f || stat<-0.51f) ? "⚫" : (stat > 0.01f || stat < -0.01f) ? "•" : "-");
     }
     private void PrintGameOver(GameEndReason endReason)
     {
