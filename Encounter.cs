@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-
-
-internal class Encounter
+﻿internal class Encounter
 {
     public int Id { get; }
     public string Character { get; }
@@ -46,10 +43,10 @@ internal class Action
     public string _text { get; }
     public StatChange _statChange { get; }
     public int _fireEncounterId { get; }
-    public Encounter _fireEncounter { get; }
+    public Encounter? _fireEncounter { get; }
     public List<int>? unlockEncounters;
 
-    public Action(string text, StatChange statChange, int fireEncounterId = -1, Encounter fireEncounter = null, List<int>? unlockEncounters =null)
+    public Action(string text, StatChange statChange, int fireEncounterId = -1, Encounter? fireEncounter = null, List<int>? unlockEncounters =null)
     {
         _text = text;
         _statChange = statChange;

@@ -1,21 +1,16 @@
-﻿using System.Data.SqlTypes;
-using System.Xml.Linq;
-using System.Linq;
-using System.Security.Cryptography;
-using OBA;
-using System.Reflection.Metadata.Ecma335;
-public class GameController
+﻿using OBA;
+public class Game
 {
-    private Random _rnd;
-    private GameState _gameState;
+    private Random? _rnd;
+    private GameState? _gameState;
 
     // Encounters and active encounters
     private List<Encounter> _encounters;
     private List<Encounter> _activeEncounters;
 
     // GameControlle must be instantiated only once
-    private static GameController _singleton;
-    private GameController()
+    private static Game? _singleton;
+    private Game()
     {
         _encounters = GameData.getEncountersFromXmlData(GameData.gameXML);
         _activeEncounters = _encounters.Where(enc => enc.IsLocked == false && enc.IsContinuation == false).ToList();
@@ -26,14 +21,14 @@ public class GameController
         _gameState = new GameState(_activeEncounters[randNum]);
 
         // initialize the player
-        Player.SetGameController(this);
+        Player.SetGame(this);
     }
 
-    public static void initialize()
+    public static void Start()
     {
         if (_singleton == null)
         {
-            _singleton = new GameController();
+            _singleton = new Game();
             _singleton.PrintStatus();
 
             return;
@@ -47,6 +42,8 @@ public class GameController
     // Action type can be left or right
     internal void PlayerAction(ActionType actionType)
     {
+        if(_gameState== null) { Console.Error.WriteLine("GameState is null"); return; }
+        if (_gameState.ActiveEncounter == null) { Console.Error.WriteLine("No active encounter yet"); return; }
         Action currentAction = _gameState.ActiveEncounter.TakeAction(actionType);
         if (currentAction == null)
         {
@@ -58,7 +55,7 @@ public class GameController
         float newPeople = currentAction._statChange.People + _gameState.people;
         float newMoney = currentAction._statChange.Money + _gameState.money;
         float newSecurity = currentAction._statChange.Security + _gameState.security;
-        Encounter nextEncounter = null;
+        Encounter? nextEncounter = null;
 
         int fireEncounterId = currentAction._fireEncounterId;
         List<int>? unlockEncounters = currentAction.unlockEncounters;
@@ -69,7 +66,9 @@ public class GameController
         }
         else
         {
-            int randNum = _rnd.Next(_activeEncounters.Count);
+            int randNum;
+            if(_rnd == null) { _rnd = new Random(); }
+            randNum = _rnd.Next(_activeEncounters.Count);
             nextEncounter = _activeEncounters[randNum];
         }
 
@@ -91,22 +90,30 @@ public class GameController
         _encounters.Clear();
         _activeEncounters.Clear();
         _singleton = null;
-        Player.SetGameController(null);
+        Player.SetGame(null);
     }
-
     private void UnlockEncounters(List<int>? encToUnlock)
     {
         if (encToUnlock != null)
         {
             foreach (int id in encToUnlock)
             {
-                _activeEncounters.Add(_encounters.FirstOrDefault(i => i.Id == id));
+                Encounter? encounter = _encounters.FirstOrDefault(i => i.Id == id);
+                if(encounter != null)
+                {
+                    _activeEncounters.Add(encounter);
+                } else
+                {
+                    Console.Error.WriteLine($"No such encounter with id {id}");
+                }
+                
             }
         }
     }
 
     public void PrintStatus()
     {
+        if (_gameState == null) { Console.Error.WriteLine("GameState is null"); return; }
         _gameState.PrintStatus();
     }
 

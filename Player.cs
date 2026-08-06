@@ -1,24 +1,24 @@
 ﻿public static class Player
 {
-    private static GameController _gameController;
+    private static Game? _game;
 
     public static void Left()
     {
-        if (_gameController == null) { Console.WriteLine($"Run {nameof(GameController)}.{nameof(GameController.initialize)} first to initialize the game"); return; }
-        _gameController?.PlayerAction(ActionType.left);
+        if (_game == null) { Console.WriteLine($"Run {nameof(Game)}.{nameof(Game.Start)} first to initialize the game"); return; }
+        _game?.PlayerAction(ActionType.left);
         
     }
     public static void Right()
     {
-        if (_gameController == null) { Console.WriteLine($"Run {nameof(GameController)}.{nameof(GameController.initialize)} first to initialize the game"); return; }
-        _gameController?.PlayerAction(ActionType.right);
+        if (_game == null) { Console.WriteLine($"Run {nameof(Game)}.{nameof(Game.Start)} first to initialize the game"); return; }
+        _game?.PlayerAction(ActionType.right);
         
     }
 
 
-    internal static void SetGameController(GameController gameController)
+    internal static void SetGame(Game? game)
     {
-        _gameController = gameController;
+        _game = game;
     }
 
 }

@@ -9,7 +9,7 @@ internal class GameState
     public bool IsGameOver { get; private set; }
     private GameEndReason _gameOverReason;
     // acitve encounter set etme kısmı tehlikeli GameState'in internalına güvendim
-    public Encounter ActiveEncounter { get; set; }
+    public Encounter? ActiveEncounter { get; private set; }
 
     public GameState(Encounter activeEncounter, float faith = 5.0F, float people = 5.0f, float money = 5.0f, float security = 5.0f)
     {
@@ -21,7 +21,7 @@ internal class GameState
         IsGameOver = false;
     }
 
-    internal protected void SetState(float faith, float people, float money, float security, Encounter activeEncounter)
+    internal protected void SetState(float faith, float people, float money, float security, Encounter? activeEncounter)
     {
         this.faith = faith;
         this.people = people;
@@ -40,7 +40,8 @@ internal class GameState
         {
             PrintGameOver(_gameOverReason);
         }
-        else { 
+        else {
+            if (ActiveEncounter == null) { Console.Error.WriteLine("No active encounter yet"); return; }
             Console.WriteLine($"---{ActiveEncounter.Character}---");
             Console.WriteLine($"{ActiveEncounter.Text}\n");
             int maxLength = Math.Max(ActiveEncounter.yes._text.Length, ActiveEncounter.no._text.Length);
