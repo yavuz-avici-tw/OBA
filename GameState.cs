@@ -19,21 +19,21 @@
 
     internal protected void SetState(float faith, float people, float money, float security, Encounter activeEncounter)
     {
-        this.faith=faith;
-        this.people=people;
-        this.money=money;
-        this.security=security;
-        ActiveEncounter = activeEncounter;  
+        this.faith = faith;
+        this.people = people;
+        this.money = money;
+        this.security = security;
+        ActiveEncounter = activeEncounter;
     }
 
     public void PrintStatus()
     {
         Console.WriteLine("\t_____STATUS____\t");
-        Console.WriteLine($"Faith: {this.faith}/10 People: {this.people}/10 Money: {this.money}/10 Security: {this.security}/10");
+        Console.WriteLine($"Faith: {faith}/10 People: {people}/10 Money: {money}/10 Security: {security}/10");
         Console.WriteLine($"---{ActiveEncounter.Character}---");
         Console.WriteLine($"{ActiveEncounter.Text}");
         Console.WriteLine($"Player.Left for {ActiveEncounter.yes._text}");
         Console.WriteLine($"PLayer.Right for {ActiveEncounter.no._text}");
-       
+
     }
 }

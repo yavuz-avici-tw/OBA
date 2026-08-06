@@ -12,6 +12,5 @@ class Program
     {
         Console.WriteLine("Type GameController.initialize() to initialize the game");
         GameController.initialize();
-        Player.GetInfo();
     }
 }

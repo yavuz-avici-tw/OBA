@@ -1,10 +1,9 @@
-﻿using OBA;
-using System.Data.SqlTypes;
+﻿using System.Data.SqlTypes;
 using System.Xml.Linq;
 using System.Linq;
 using System.Security.Cryptography;
-
-public partial class GameController
+using OBA;
+public class GameController
 {
     private Random _rnd;
     private GameState _gameState;
@@ -37,7 +36,7 @@ public partial class GameController
         if (_singleton == null)
         {
             _singleton = new GameController();
-            Player.GetInfo();
+            _singleton.PrintStatus();
 
             return;
         }
