@@ -8,9 +8,6 @@ public class GameController
     private Random _rnd;
     private GameState _gameState;
 
-    // xml document object for loading encounters
-    private XDocument _xdoc;
-
     // Encounters and active encounters
     private List<Encounter> _encounters;
     private List<Encounter> _activeEncounters;
@@ -40,6 +37,7 @@ public class GameController
 
             return;
         }
+        Console.WriteLine("Game already init");
         return;
     }
 
@@ -52,8 +50,27 @@ public class GameController
         else if (actionType == ActionType.right)
         {
             RightAction();
+        } else
+        {
+            Console.WriteLine("You were not supposed to be here.");
+        }
+        PrintStatus();
+        if (_gameState.IsGameOver)
+        {
+            KillYourself();
         }
     }
+    private void KillYourself()
+    {
+        
+        _gameState = null;
+        _rnd = null;
+        _encounters.Clear();
+        _activeEncounters.Clear();
+        _singleton = null;
+        Player.SetGameController(null);
+    }
+
     private void LeftAction()
     {
         float newFaith = _gameState.ActiveEncounter.yes._statChange.Faith + _gameState.faith;
