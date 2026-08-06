@@ -42,9 +42,9 @@ internal class GameState
         }
         else { 
             Console.WriteLine($"---{ActiveEncounter.Character}---");
-            Console.WriteLine($"{ActiveEncounter.Text}");
-            Console.WriteLine($"Player.Left for {ActiveEncounter.yes._text}");
-            Console.WriteLine($"PLayer.Right for {ActiveEncounter.no._text}");
+            Console.WriteLine($"{ActiveEncounter.Text}\n");
+            Console.WriteLine($"Player.Left()  for {ActiveEncounter.yes._text}");
+            Console.WriteLine($"Player.Right() for {ActiveEncounter.no._text}");
         }
     }
     private void PrintGameOver(GameEndReason endReason)
