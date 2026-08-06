@@ -1,4 +1,5 @@
 ﻿using OBA;
+using static GameState;
 public class Game
 {
     private Random? _rnd;
@@ -9,10 +10,12 @@ public class Game
     private List<Encounter> _activeEncounters;
 
     // GameControlle must be instantiated only once
-    private static Game? _singleton;
+    public static Game? Singleton { get; private set; }
+
+
     private Game()
     {
-        _encounters = GameData.getEncountersFromXmlData(GameData.gameXML);
+        _encounters = GameData.getEncountersFromXmlData();
         _activeEncounters = _encounters.Where(enc => enc.IsLocked == false && enc.IsContinuation == false).ToList();
         _rnd = new Random();
 
@@ -20,16 +23,16 @@ public class Game
         int randNum = _rnd.Next(_activeEncounters.Count);
         _gameState = new GameState(_activeEncounters[randNum]);
 
-        // initialize the player
-        Player.SetGame(this);
+       
+
     }
 
     public static void Start()
     {
-        if (_singleton == null)
+        if (Singleton == null)
         {
-            _singleton = new Game();
-            _singleton.PrintStatus();
+            Singleton = new Game();
+            Singleton.PrintStatus();
 
             return;
         }
@@ -89,8 +92,8 @@ public class Game
         _rnd = null;
         _encounters.Clear();
         _activeEncounters.Clear();
-        _singleton = null;
-        Player.SetGame(null);
+        Singleton = null;
+        
     }
     private void UnlockEncounters(List<int>? encToUnlock)
     {
@@ -114,7 +117,47 @@ public class Game
     public void PrintStatus()
     {
         if (_gameState == null) { Console.Error.WriteLine("GameState is null"); return; }
-        _gameState.PrintStatus();
+        if (_gameState.ActiveEncounter == null) { Console.Error.WriteLine("No active encounter yet"); return; }
+
+        Console.WriteLine("\t_____STATUS____\t");
+        Console.WriteLine($"Faith: {_gameState.faith}/10 People: {_gameState.people}/10 Money: {_gameState.money}/10 Security: {_gameState.security}/10");
+
+        if (_gameState.IsGameOver)
+        {
+            PrintGameOver(_gameState.gameEndReason);
+        }
+        else
+        {
+            if (_gameState.ActiveEncounter == null) { Console.Error.WriteLine("No active encounter yet"); return; }
+
+            Console.WriteLine($"---{_gameState.ActiveEncounter.Character}---");
+            Console.WriteLine($"{_gameState.ActiveEncounter.Text}\n");
+            int maxLength = Math.Max(_gameState.ActiveEncounter.yes._text.Length, _gameState.ActiveEncounter.no._text.Length);
+            string yesText = new string(_gameState.ActiveEncounter.yes._text);
+            string noText = new string(_gameState.ActiveEncounter.no._text);
+            yesText = yesText.PadRight(maxLength);
+            noText = noText.PadRight(maxLength); //⚫ • - -
+            string yesEffects = getEffectStringOfAction(_gameState.ActiveEncounter.yes);
+            string noEffects = getEffectStringOfAction(_gameState.ActiveEncounter.no);
+            Console.WriteLine($"Player.Left()  for {yesText}     Effects: " + yesEffects);
+            Console.WriteLine($"Player.Right() for {noText}     Effects: " + noEffects);
+        }
+
+    }
+    private void PrintGameOver(GameEndReason endReason)
+    {
+        Console.WriteLine(GameData.GameEndReasonTexts[endReason]);
+    }
+    private string getEffectStringOfAction(Action action)
+    {
+        return getEffectStringOfStat(action._statChange.Faith) +
+            getEffectStringOfStat(action._statChange.People) +
+            getEffectStringOfStat(action._statChange.Money) +
+            getEffectStringOfStat(action._statChange.Security);
+    }
+    private string getEffectStringOfStat(float stat)
+    {
+        return ((stat > 0.51f || stat < -0.51f) ? "⚫" : (stat > 0.01f || stat < -0.01f) ? "•" : "-");
     }
 
 }

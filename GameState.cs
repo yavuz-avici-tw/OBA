@@ -7,7 +7,7 @@ public class GameState
     public float money;
     public float security;
     public bool IsGameOver { get; private set; }
-    private GameEndReason _gameOverReason;
+    public GameEndReason gameEndReason { get; private set; }
     // acitve encounter set etme kısmı tehlikeli GameState'in internalına güvendim
     public Encounter? ActiveEncounter { get; private set; }
 
@@ -31,87 +31,50 @@ public class GameState
         CheckIsGameOver();
     }
 
-    public void PrintStatus()
-    {
-        
-        Console.WriteLine("\t_____STATUS____\t");
-        Console.WriteLine($"Faith: {faith}/10 People: {people}/10 Money: {money}/10 Security: {security}/10");
-        if (IsGameOver)
-        {
-            PrintGameOver(_gameOverReason);
-        }
-        else {
-            if (ActiveEncounter == null) { Console.Error.WriteLine("No active encounter yet"); return; }
-            Console.WriteLine($"---{ActiveEncounter.Character}---");
-            Console.WriteLine($"{ActiveEncounter.Text}\n");
-            int maxLength = Math.Max(ActiveEncounter.yes._text.Length, ActiveEncounter.no._text.Length);
-            string yesText = new string(ActiveEncounter.yes._text);
-            string noText = new string(ActiveEncounter.no._text);
-            yesText =yesText.PadRight(maxLength);
-            noText =noText.PadRight(maxLength); //⚫ • - -
-            string yesEffects = getEffectStringOfAction(ActiveEncounter.yes);
-            string noEffects = getEffectStringOfAction(ActiveEncounter.no);
-            Console.WriteLine($"Player.Left()  for {yesText}     Effects: "+yesEffects);
-            Console.WriteLine($"Player.Right() for {noText}     Effects: "+noEffects);
-        }
-        
-    }
-    private string getEffectStringOfAction(Action action)
-    {
-        return getEffectStringOfStat(action._statChange.Faith) +
-            getEffectStringOfStat(action._statChange.People) +
-            getEffectStringOfStat(action._statChange.Money) +
-            getEffectStringOfStat(action._statChange.Security);
-    }
-    private string getEffectStringOfStat(float stat)
-    {
-        return ((stat > 0.51f || stat<-0.51f) ? "⚫" : (stat > 0.01f || stat < -0.01f) ? "•" : "-");
-    }
-    private void PrintGameOver(GameEndReason endReason)
-    {
-        Console.WriteLine(GameData.GameEndReasonTexts[endReason]);
-    }
+    
+    
+    
     private void CheckIsGameOver()
     {
         if(faith < 0.0f)
         {
             IsGameOver=true;
-            _gameOverReason = GameEndReason.LowFaith;
+            gameEndReason = GameEndReason.LowFaith;
             return;
         }
         if (faith > 10.0f)
         {
-            IsGameOver = true; _gameOverReason = GameEndReason.HighFaith;
+            IsGameOver = true; gameEndReason = GameEndReason.HighFaith;
             return;
         }
         if (people < 0.0f)
         {
-            IsGameOver = true;_gameOverReason = GameEndReason.LowPeople;
+            IsGameOver = true;gameEndReason = GameEndReason.LowPeople;
             return;
         }
         if (people > 10.0f)
         {
-            IsGameOver = true;_gameOverReason = GameEndReason.HighPeople;
+            IsGameOver = true;gameEndReason = GameEndReason.HighPeople;
             return;
         }
         if (money < 0.0f)
         {
-            IsGameOver = true;_gameOverReason = GameEndReason.LowMoney;
+            IsGameOver = true;gameEndReason = GameEndReason.LowMoney;
             return;
         }
         if (money > 10.0f)
         {
-            IsGameOver = true;_gameOverReason = GameEndReason.HighMoney;
+            IsGameOver = true;gameEndReason = GameEndReason.HighMoney;
             return;
         }
         if (security < 0.0f)
         {
-            IsGameOver = true;_gameOverReason = GameEndReason.LowSecurity;
+            IsGameOver = true;gameEndReason = GameEndReason.LowSecurity;
             return;
         }
         if (security > 10.0f)
         {
-            IsGameOver = true;_gameOverReason = GameEndReason.HighSecurity;
+            IsGameOver = true;gameEndReason = GameEndReason.HighSecurity;
             return;
         }
     }
