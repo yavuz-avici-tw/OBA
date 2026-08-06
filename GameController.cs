@@ -44,19 +44,57 @@ public class GameController
 
     // Farklı actionlardaki repetetive kısım buraya taşınabilir
 
+    //internal void PlayerAction(ActionType actionType)
+    //{
+    //    if (actionType == ActionType.left)
+    //    {
+    //        LeftAction();
+    //    }
+    //    else if (actionType == ActionType.right)
+    //    {
+    //        RightAction();
+    //    } else
+    //    {
+    //        Console.WriteLine("You were not supposed to be here.");
+    //    }
+    //    PrintStatus();
+    //    if (_gameState.IsGameOver)
+    //    {
+    //        KillYourself();
+    //    }
+    //}
+
+    // Action type can be left or right
     internal void PlayerAction(ActionType actionType)
     {
-        if (actionType == ActionType.left)
+        Action currentAction = _gameState.ActiveEncounter.TakeAction(actionType);
+        if (currentAction == null)
         {
-            LeftAction();
+            Console.Error.WriteLine("ERROR::GAME_CONTROLLER::COULDN'T_FETCH_ACTIVE_ACTION");
+            return;
         }
-        else if (actionType == ActionType.right)
+
+        float newFaith = currentAction._statChange.Faith + _gameState.faith;
+        float newPeople = currentAction._statChange.People + _gameState.people;
+        float newMoney = currentAction._statChange.Money + _gameState.money;
+        float newSecurity = currentAction._statChange.Security + _gameState.security;
+        Encounter nextEncounter = null;
+
+        int fireEncounterId = currentAction._fireEncounterId;
+        List<int>? unlockEncounters = currentAction.unlockEncounters;
+
+        if (fireEncounterId != -1)
         {
-            RightAction();
-        } else
-        {
-            Console.WriteLine("You were not supposed to be here.");
+            nextEncounter = _activeEncounters.FirstOrDefault(enc => enc.Id == fireEncounterId);
         }
+        else
+        {
+            int randNum = _rnd.Next(_activeEncounters.Count);
+            nextEncounter = _activeEncounters[randNum];
+        }
+
+        UnlockEncounters(unlockEncounters);
+        _gameState.SetState(newFaith, newPeople, newMoney, newSecurity, nextEncounter);
         PrintStatus();
         if (_gameState.IsGameOver)
         {
@@ -78,63 +116,63 @@ public class GameController
 
     // Bu iki fonksiyondaki kod tekrarı harbici bir sorun
 
-    private void LeftAction()
-    {
-        float newFaith = _gameState.ActiveEncounter.yes._statChange.Faith + _gameState.faith;
-        float newPeople = _gameState.ActiveEncounter.yes._statChange.People + _gameState.people;
-        float newMoney = _gameState.ActiveEncounter.yes._statChange.Money + _gameState.money;
-        float newSecurity = _gameState.ActiveEncounter.yes._statChange.Security + _gameState.security;
-        Encounter nextEncounter;
+    //private void LeftAction()
+    //{
+    //    float newFaith = _gameState.ActiveEncounter.yes._statChange.Faith + _gameState.faith;
+    //    float newPeople = _gameState.ActiveEncounter.yes._statChange.People + _gameState.people;
+    //    float newMoney = _gameState.ActiveEncounter.yes._statChange.Money + _gameState.money;
+    //    float newSecurity = _gameState.ActiveEncounter.yes._statChange.Security + _gameState.security;
+    //    Encounter nextEncounter;
 
-        // Call fire encounter immediately
-        int fireEncounterId = _gameState.ActiveEncounter.yes._fireEncounterId; 
+    //    // Call fire encounter immediately
+    //    int fireEncounterId = _gameState.ActiveEncounter.yes._fireEncounterId; 
 
-        // unlock the encounter by adding it to the active encounters
-        List<int>? unlockEncounters = _gameState.ActiveEncounter.yes.unlockEncounters;
+    //    // unlock the encounter by adding it to the active encounters
+    //    List<int>? unlockEncounters = _gameState.ActiveEncounter.yes.unlockEncounters;
 
-        if (fireEncounterId != -1)
-        {
-            nextEncounter = _activeEncounters[fireEncounterId];
-        }
-        else
-        {
-            int randNum = _rnd.Next(_activeEncounters.Count);
-            nextEncounter = _activeEncounters[randNum];
-        }
+    //    if (fireEncounterId != -1)
+    //    {
+    //        nextEncounter = _activeEncounters[fireEncounterId];
+    //    }
+    //    else
+    //    {
+    //        int randNum = _rnd.Next(_activeEncounters.Count);
+    //        nextEncounter = _activeEncounters[randNum];
+    //    }
 
-        UnlockEncounters(unlockEncounters);
+    //    UnlockEncounters(unlockEncounters);
 
-        _gameState.SetState(newFaith, newPeople, newMoney, newSecurity, nextEncounter);
-    }
+    //    _gameState.SetState(newFaith, newPeople, newMoney, newSecurity, nextEncounter);
+    //}
 
-    private void RightAction()
-    {
-        float newFaith = _gameState.ActiveEncounter.no._statChange.Faith + _gameState.faith;
-        float newPeople = _gameState.ActiveEncounter.no._statChange.People + _gameState.people;
-        float newMoney = _gameState.ActiveEncounter.no._statChange.Money + _gameState.money;
-        float newSecurity = _gameState.ActiveEncounter.no._statChange.Security + _gameState.security;
-        Encounter nextEncounter;
+    //private void RightAction()
+    //{
+    //    float newFaith = _gameState.ActiveEncounter.no._statChange.Faith + _gameState.faith;
+    //    float newPeople = _gameState.ActiveEncounter.no._statChange.People + _gameState.people;
+    //    float newMoney = _gameState.ActiveEncounter.no._statChange.Money + _gameState.money;
+    //    float newSecurity = _gameState.ActiveEncounter.no._statChange.Security + _gameState.security;
+    //    Encounter nextEncounter;
 
-        // Call fire encounter immediately
-        int fireEncounterId = _gameState.ActiveEncounter.no._fireEncounterId;
+    //    // Call fire encounter immediately
+    //    int fireEncounterId = _gameState.ActiveEncounter.no._fireEncounterId;
 
-        // unlock the encounter by adding it to the active encounters
-        List<int>? unlockEncounters = _gameState.ActiveEncounter.no.unlockEncounters;
+    //    // unlock the encounter by adding it to the active encounters
+    //    List<int>? unlockEncounters = _gameState.ActiveEncounter.no.unlockEncounters;
 
-        if (fireEncounterId != -1)
-        {
-            nextEncounter = _activeEncounters[fireEncounterId];
-        }
-        else
-        {
-            int randNum = _rnd.Next(_activeEncounters.Count);
-            nextEncounter = _activeEncounters[randNum];
-        }
+    //    if (fireEncounterId != -1)
+    //    {
+    //        nextEncounter = _activeEncounters[fireEncounterId];
+    //    }
+    //    else
+    //    {
+    //        int randNum = _rnd.Next(_activeEncounters.Count);
+    //        nextEncounter = _activeEncounters[randNum];
+    //    }
 
-        UnlockEncounters(unlockEncounters);
+    //    UnlockEncounters(unlockEncounters);
 
-        _gameState.SetState(newFaith, newPeople, newMoney, newSecurity, nextEncounter);
-    }
+    //    _gameState.SetState(newFaith, newPeople, newMoney, newSecurity, nextEncounter);
+    //}
 
     private void UnlockEncounters(List<int>? encToUnlock)
     {

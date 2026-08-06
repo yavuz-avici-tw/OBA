@@ -25,6 +25,21 @@ internal class Encounter
         ProbabilityModifier = probabilityModifier;
         IsOneTime = isOneTime;
     }
+
+    public Action TakeAction(ActionType action)
+    {
+        if (action == ActionType.left)
+        {
+            return yes;
+        }
+        else if (action == ActionType.right)
+        {
+            return no;
+        }
+
+        // All code paths need to return a value
+        return yes;
+    }
 }
 internal class Action
 {
