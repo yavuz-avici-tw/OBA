@@ -5,8 +5,8 @@
     public string Text { get; }
     public bool IsLocked { get; }
     public bool IsContinuation { get; }
-    public Action yes;
-    public Action no;
+    public Action yes { get; }
+    public Action no { get; }
     public float ProbabilityModifier { get; }
     public bool IsOneTime { get; }
 
@@ -44,7 +44,7 @@ public class Action
     public StatChange _statChange { get; }
     public int _fireEncounterId { get; }
     public Encounter? _fireEncounter { get; }
-    public List<int>? unlockEncounters;
+    public int[]? unlockEncounters { get; }
 
     public Action(string text, StatChange statChange, int fireEncounterId = -1, Encounter? fireEncounter = null, List<int>? unlockEncounters =null)
     {
@@ -52,7 +52,10 @@ public class Action
         _statChange = statChange;
         _fireEncounterId = fireEncounterId;
         _fireEncounter = fireEncounter;
-        this.unlockEncounters = unlockEncounters;
+        if (unlockEncounters != null)
+        {
+            this.unlockEncounters = unlockEncounters.ToArray();
+        }
     }
 
 }

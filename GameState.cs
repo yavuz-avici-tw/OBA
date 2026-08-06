@@ -2,10 +2,10 @@
 
 public class GameState
 {
-    public float faith;
-    public float people;
-    public float money;
-    public float security;
+    public float Faith { get; private set; }
+    public float People { get; private set; }
+    public float Money { get; private set; }
+    public float Security { get; private set; }
     public bool IsGameOver { get; private set; }
     public GameEndReason gameEndReason { get; private set; }
     // acitve encounter set etme kısmı tehlikeli GameState'in internalına güvendim
@@ -13,20 +13,20 @@ public class GameState
 
     public GameState(Encounter activeEncounter, float faith = 5.0F, float people = 5.0f, float money = 5.0f, float security = 5.0f)
     {
-        this.faith = faith;
-        this.people = people;
-        this.money = money;
-        this.security = security;
+        this.Faith = faith;
+        this.People = people;
+        this.Money = money;
+        this.Security = security;
         ActiveEncounter = activeEncounter;
         IsGameOver = false;
     }
 
     internal protected void SetState(float faith, float people, float money, float security, Encounter? activeEncounter)
     {
-        this.faith = faith;
-        this.people = people;
-        this.money = money;
-        this.security = security;
+        this.Faith = faith;
+        this.People = people;
+        this.Money = money;
+        this.Security = security;
         ActiveEncounter = activeEncounter;
         CheckIsGameOver();
     }
@@ -36,43 +36,43 @@ public class GameState
     
     private void CheckIsGameOver()
     {
-        if(faith < 0.0f)
+        if(Faith < 0.0f)
         {
             IsGameOver=true;
             gameEndReason = GameEndReason.LowFaith;
             return;
         }
-        if (faith > 10.0f)
+        if (Faith > 10.0f)
         {
             IsGameOver = true; gameEndReason = GameEndReason.HighFaith;
             return;
         }
-        if (people < 0.0f)
+        if (People < 0.0f)
         {
             IsGameOver = true;gameEndReason = GameEndReason.LowPeople;
             return;
         }
-        if (people > 10.0f)
+        if (People > 10.0f)
         {
             IsGameOver = true;gameEndReason = GameEndReason.HighPeople;
             return;
         }
-        if (money < 0.0f)
+        if (Money < 0.0f)
         {
             IsGameOver = true;gameEndReason = GameEndReason.LowMoney;
             return;
         }
-        if (money > 10.0f)
+        if (Money > 10.0f)
         {
             IsGameOver = true;gameEndReason = GameEndReason.HighMoney;
             return;
         }
-        if (security < 0.0f)
+        if (Security < 0.0f)
         {
             IsGameOver = true;gameEndReason = GameEndReason.LowSecurity;
             return;
         }
-        if (security > 10.0f)
+        if (Security > 10.0f)
         {
             IsGameOver = true;gameEndReason = GameEndReason.HighSecurity;
             return;

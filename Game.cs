@@ -54,14 +54,14 @@ public class Game
             return;
         }
 
-        float newFaith = currentAction._statChange.Faith + _gameState.faith;
-        float newPeople = currentAction._statChange.People + _gameState.people;
-        float newMoney = currentAction._statChange.Money + _gameState.money;
-        float newSecurity = currentAction._statChange.Security + _gameState.security;
+        float newFaith = currentAction._statChange.Faith + _gameState.Faith;
+        float newPeople = currentAction._statChange.People + _gameState.People;
+        float newMoney = currentAction._statChange.Money + _gameState.Money;
+        float newSecurity = currentAction._statChange.Security + _gameState.Security;
         Encounter? nextEncounter = null;
 
         int fireEncounterId = currentAction._fireEncounterId;
-        List<int>? unlockEncounters = currentAction.unlockEncounters;
+        int[]? unlockEncounters = currentAction.unlockEncounters;
 
         if (fireEncounterId != -1)
         {
@@ -95,7 +95,7 @@ public class Game
         Singleton = null;
         
     }
-    private void UnlockEncounters(List<int>? encToUnlock)
+    private void UnlockEncounters(int[]? encToUnlock)
     {
         if (encToUnlock != null)
         {
@@ -120,7 +120,7 @@ public class Game
         if (_gameState.ActiveEncounter == null) { Console.Error.WriteLine("No active encounter yet"); return; }
 
         Console.WriteLine("\t_____STATUS____\t");
-        Console.WriteLine($"Faith: {_gameState.faith}/10 People: {_gameState.people}/10 Money: {_gameState.money}/10 Security: {_gameState.security}/10");
+        Console.WriteLine($"Faith: {_gameState.Faith}/10 People: {_gameState.People}/10 Money: {_gameState.Money}/10 Security: {_gameState.Security}/10");
 
         if (_gameState.IsGameOver)
         {
