@@ -1,4 +1,4 @@
-﻿internal class Encounter
+﻿public class Encounter
 {
     public int Id { get; }
     public string Character { get; }
@@ -38,7 +38,7 @@
         return yes;
     }
 }
-internal class Action
+public class Action
 {
     public string _text { get; }
     public StatChange _statChange { get; }
@@ -56,7 +56,7 @@ internal class Action
     }
 
 }
-internal class StatChange
+public class StatChange
 {
     public float Faith {get;}
     public float People {get;}

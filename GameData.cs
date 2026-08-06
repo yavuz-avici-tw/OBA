@@ -3,7 +3,7 @@ using System.Xml.Linq;
 
 namespace OBA
 {
-    internal class GameData
+    public class GameData
     {
         //LowFaith, HighFaith, LowPeople, HighPeople, LowMoney, HighMoney, LowSecurity, HighSecurity
         public static FrozenDictionary<GameState.GameEndReason,string> GameEndReasonTexts = new Dictionary<GameState.GameEndReason, string>

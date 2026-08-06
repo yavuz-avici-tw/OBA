@@ -1,6 +1,6 @@
 ﻿using OBA;
 
-internal class GameState
+public class GameState
 {
     public float faith;
     public float people;
