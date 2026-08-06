@@ -468,5 +468,50 @@
 			</STAT_CHANGE>
 		</NO>
 	</ENCOUNTER>
+	<ENCOUNTER id="20">
+		<CHARACTER>VALİ</CHARACTER>
+		<TEXT>Tüccarlar buraya gelip şaman'ı rahatsız edecek şeyler satıyorlar</TEXT>
+		<YES>
+			<TEXT>Umrumda değil</TEXT>
+			<STAT_CHANGE>
+				<FAITH>-0.5</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>1.0</MONEY>
+			</STAT_CHANGE>
+		</YES>
+		<NO>
+			<TEXT>Ona da payını ver</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>0.0</SECURITY>
+				<MONEY>0.5</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+	<ENCOUNTER id="21">
+		<CHARACTER>VALİ</CHARACTER>
+		<TEXT>Kaybettiğimiz askerlerin anısına büyük bir tören hazırlamayı düşünüyoruz</TEXT>
+		<YES>
+			<TEXT>Tamam</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>1.0</SECURITY>
+				<MONEY>-1.0</MONEY>
+			</STAT_CHANGE>
+		</YES>
+		<NO>
+			<TEXT>Hayır</TEXT>
+			<STAT_CHANGE>
+				<FAITH>0.0</FAITH>
+				<PEOPLE>0.0</PEOPLE>
+				<SECURITY>-0.5</SECURITY>
+				<MONEY>0.5</MONEY>
+			</STAT_CHANGE>
+		</NO>
+	</ENCOUNTER>
+	
 	
 </ENCOUNTERS>

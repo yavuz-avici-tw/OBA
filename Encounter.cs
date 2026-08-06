@@ -27,8 +27,8 @@ internal class Action
 {
     public string _text { get; }
     public StatChange _statChange { get; }
-    public int _fireEncounterId;
-    public Encounter _fireEncounter;
+    public int _fireEncounterId { get; }
+    public Encounter _fireEncounter { get; }
     public List<int>? unlockEncounters;
 
     public Action(string text, StatChange statChange, int fireEncounterId = -1, Encounter fireEncounter = null, List<int>? unlockEncounters =null)

@@ -1,16 +1,12 @@
-﻿using OBA;
-using System.Data.SqlTypes;
+﻿using System.Data.SqlTypes;
 using System.Xml.Linq;
 using System.Linq;
 using System.Security.Cryptography;
-
-public partial class GameController
+using OBA;
+public class GameController
 {
     private Random _rnd;
     private GameState _gameState;
-
-    // xml document object for loading encounters
-    private XDocument _xdoc;
 
     // Encounters and active encounters
     private List<Encounter> _encounters;
@@ -37,10 +33,11 @@ public partial class GameController
         if (_singleton == null)
         {
             _singleton = new GameController();
-            Player.GetInfo();
+            _singleton.PrintStatus();
 
             return;
         }
+        Console.WriteLine("Game already init");
         return;
     }
 
@@ -53,8 +50,27 @@ public partial class GameController
         else if (actionType == ActionType.right)
         {
             RightAction();
+        } else
+        {
+            Console.WriteLine("You were not supposed to be here.");
+        }
+        PrintStatus();
+        if (_gameState.IsGameOver)
+        {
+            KillYourself();
         }
     }
+    private void KillYourself()
+    {
+        
+        _gameState = null;
+        _rnd = null;
+        _encounters.Clear();
+        _activeEncounters.Clear();
+        _singleton = null;
+        Player.SetGameController(null);
+    }
+
     private void LeftAction()
     {
         float newFaith = _gameState.ActiveEncounter.yes._statChange.Faith + _gameState.faith;
