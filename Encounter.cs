@@ -48,16 +48,14 @@ public class Action
     public Encounter? _fireEncounter { get; }
     public ReadOnlyCollection<int>? unlockEncounters { get; }
 
-    public Action(string text, StatChange statChange, int fireEncounterId = -1, Encounter? fireEncounter = null, List<int>? unlockEncounters =null)
+    public Action(string text, StatChange statChange, int fireEncounterId = -1, Encounter? fireEncounter = null, ReadOnlyCollection<int>? unlockEncounters =null)
     {
         _text = text;
         _statChange = statChange;
         _fireEncounterId = fireEncounterId;
         _fireEncounter = fireEncounter;
-        if (unlockEncounters != null)
-        {
-            this.unlockEncounters = unlockEncounters.AsReadOnly();
-        }
+        this.unlockEncounters = unlockEncounters;
+        
         
     }
 
