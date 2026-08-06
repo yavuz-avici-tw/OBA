@@ -7,7 +7,7 @@ public class Game
     private GameState? _gameState;
 
     // Encounters and active encounters
-    private List<Encounter> _encounters;
+    private ReadOnlyCollection<Encounter> _encounters;
     private List<Encounter> _activeEncounters;
 
     // GameControlle must be instantiated only once
@@ -91,7 +91,7 @@ public class Game
         
         _gameState = null;
         _rnd = null;
-        _encounters.Clear();
+        _encounters=null;
         _activeEncounters.Clear();
         Singleton = null;
         
