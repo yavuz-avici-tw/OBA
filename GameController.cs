@@ -3,6 +3,7 @@ using System.Xml.Linq;
 using System.Linq;
 using System.Security.Cryptography;
 using OBA;
+using System.Reflection.Metadata.Ecma335;
 public class GameController
 {
     private Random _rnd;
@@ -41,6 +42,8 @@ public class GameController
         return;
     }
 
+    // Farklı actionlardaki repetetive kısım buraya taşınabilir
+
     internal void PlayerAction(ActionType actionType)
     {
         if (actionType == ActionType.left)
@@ -60,6 +63,8 @@ public class GameController
             KillYourself();
         }
     }
+
+    // Destructor yazılabilir mi?
     private void KillYourself()
     {
         
@@ -71,6 +76,8 @@ public class GameController
         Player.SetGameController(null);
     }
 
+    // Bu iki fonksiyondaki kod tekrarı harbici bir sorun
+
     private void LeftAction()
     {
         float newFaith = _gameState.ActiveEncounter.yes._statChange.Faith + _gameState.faith;
@@ -79,7 +86,11 @@ public class GameController
         float newSecurity = _gameState.ActiveEncounter.yes._statChange.Security + _gameState.security;
         Encounter nextEncounter;
 
-        int fireEncounterId = _gameState.ActiveEncounter.yes._fireEncounterId;
+        // Call fire encounter immediately
+        int fireEncounterId = _gameState.ActiveEncounter.yes._fireEncounterId; 
+
+        // unlock the encounter by adding it to the active encounters
+        List<int>? unlockEncounters = _gameState.ActiveEncounter.yes.unlockEncounters;
 
         if (fireEncounterId != -1)
         {
@@ -90,6 +101,8 @@ public class GameController
             int randNum = _rnd.Next(_activeEncounters.Count);
             nextEncounter = _activeEncounters[randNum];
         }
+
+        UnlockEncounters(unlockEncounters);
 
         _gameState.SetState(newFaith, newPeople, newMoney, newSecurity, nextEncounter);
     }
@@ -102,7 +115,11 @@ public class GameController
         float newSecurity = _gameState.ActiveEncounter.no._statChange.Security + _gameState.security;
         Encounter nextEncounter;
 
+        // Call fire encounter immediately
         int fireEncounterId = _gameState.ActiveEncounter.no._fireEncounterId;
+
+        // unlock the encounter by adding it to the active encounters
+        List<int>? unlockEncounters = _gameState.ActiveEncounter.no.unlockEncounters;
 
         if (fireEncounterId != -1)
         {
@@ -114,7 +131,20 @@ public class GameController
             nextEncounter = _activeEncounters[randNum];
         }
 
+        UnlockEncounters(unlockEncounters);
+
         _gameState.SetState(newFaith, newPeople, newMoney, newSecurity, nextEncounter);
+    }
+
+    private void UnlockEncounters(List<int>? encToUnlock)
+    {
+        if (encToUnlock != null)
+        {
+            foreach (int id in encToUnlock)
+            {
+                _activeEncounters.Add(_encounters.FirstOrDefault(i => i.Id == id));
+            }
+        }
     }
 
     public void PrintStatus()
