@@ -29,13 +29,15 @@ internal class Action
     public StatChange _statChange { get; }
     public int _fireEncounterId;
     public Encounter _fireEncounter;
+    public List<int>? unlockEncounters;
 
-    public Action(string text, StatChange statChange, int fireEncounterId = -1, Encounter fireEncounter = null)
+    public Action(string text, StatChange statChange, int fireEncounterId = -1, Encounter fireEncounter = null, List<int>? unlockEncounters =null)
     {
         _text = text;
         _statChange = statChange;
         _fireEncounterId = fireEncounterId;
         _fireEncounter = fireEncounter;
+        this.unlockEncounters = unlockEncounters;
     }
 
 }
