@@ -1,4 +1,6 @@
-﻿public class Encounter
+﻿using System.Collections.ObjectModel;
+
+public class Encounter
 {
     public int Id { get; }
     public string Character { get; }
@@ -44,7 +46,7 @@ public class Action
     public StatChange _statChange { get; }
     public int _fireEncounterId { get; }
     public Encounter? _fireEncounter { get; }
-    public int[]? unlockEncounters { get; }
+    public ReadOnlyCollection<int>? unlockEncounters { get; }
 
     public Action(string text, StatChange statChange, int fireEncounterId = -1, Encounter? fireEncounter = null, List<int>? unlockEncounters =null)
     {
@@ -54,8 +56,9 @@ public class Action
         _fireEncounter = fireEncounter;
         if (unlockEncounters != null)
         {
-            this.unlockEncounters = unlockEncounters.ToArray();
+            this.unlockEncounters = unlockEncounters.AsReadOnly();
         }
+        
     }
 
 }

@@ -1,4 +1,5 @@
 ﻿using OBA;
+using System.Collections.ObjectModel;
 using static GameState;
 public class Game
 {
@@ -61,7 +62,7 @@ public class Game
         Encounter? nextEncounter = null;
 
         int fireEncounterId = currentAction._fireEncounterId;
-        int[]? unlockEncounters = currentAction.unlockEncounters;
+        ReadOnlyCollection<int>? unlockEncounters = currentAction.unlockEncounters;
 
         if (fireEncounterId != -1)
         {
@@ -95,7 +96,7 @@ public class Game
         Singleton = null;
         
     }
-    private void UnlockEncounters(int[]? encToUnlock)
+    private void UnlockEncounters(ReadOnlyCollection<int>? encToUnlock)
     {
         if (encToUnlock != null)
         {
