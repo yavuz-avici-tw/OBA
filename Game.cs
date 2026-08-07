@@ -1,4 +1,5 @@
 ﻿using OBA;
+using System;
 using static GameState;
 public class Game
 {
@@ -8,23 +9,25 @@ public class Game
     // Encounters and active encounters
     private List<Encounter> _encounters;
     private List<Encounter> _activeEncounters;
+    private Stack<Encounter> _activeStack;
+    private const int stackSize = 3;
 
     // GameControlle must be instantiated only once
     public static Game? Singleton { get; private set; }
-
 
     private Game()
     {
         _encounters = GameData.getEncountersFromXmlData();
         _activeEncounters = _encounters.Where(enc => enc.IsLocked == false && enc.IsContinuation == false).ToList();
         _rnd = new Random();
+        SetEncounterStack();
 
         // selecting random encounter from active ones
-        int randNum = _rnd.Next(_activeEncounters.Count);
-        _gameState = new GameState(_activeEncounters[randNum]);
-
-       
-
+        //int randNum = _rnd.Next(_activeEncounters.Count);
+        //_gameState = new GameState(_activeEncounters[randNum]);
+        if (_activeStack == null) { Console.Error.WriteLine("ERROR::ACTIVE_STACK_CANNOT_BE_NULL"); return; }
+        
+        _gameState = new GameState(_activeStack.Pop());
     }
 
     public static void Start()
@@ -40,8 +43,6 @@ public class Game
         return;
     }
 
-    
-
     // Action type can be left or right
     internal void PlayerAction(ActionType actionType)
     {
@@ -54,30 +55,38 @@ public class Game
             return;
         }
 
+        bool isOneTimeEncounter = _gameState.ActiveEncounter.IsOneTime;
+        if (isOneTimeEncounter)
+        {
+            _encounters.Remove(_gameState.ActiveEncounter);
+        }
+
         float newFaith = currentAction._statChange.Faith + _gameState.faith;
         float newPeople = currentAction._statChange.People + _gameState.people;
         float newMoney = currentAction._statChange.Money + _gameState.money;
         float newSecurity = currentAction._statChange.Security + _gameState.security;
-        Encounter? nextEncounter = null;
-
         int fireEncounterId = currentAction._fireEncounterId;
         List<int>? unlockEncounters = currentAction.unlockEncounters;
 
+        Encounter? nextEncounter = null;
+
         if (fireEncounterId != -1)
         {
-            nextEncounter = _activeEncounters.FirstOrDefault(enc => enc.Id == fireEncounterId);
+            _activeStack.Push(_activeEncounters.FirstOrDefault(enc => enc.Id == fireEncounterId));
         }
-        else
-        {
-            int randNum;
-            if(_rnd == null) { _rnd = new Random(); }
-            randNum = _rnd.Next(_activeEncounters.Count);
-            nextEncounter = _activeEncounters[randNum];
-        }
+        nextEncounter = _activeStack.Pop();
 
         UnlockEncounters(unlockEncounters);
+
         _gameState.SetState(newFaith, newPeople, newMoney, newSecurity, nextEncounter);
+
+        if (_activeStack.Count <= 0)
+        {
+            SetEncounterStack();
+        }
+
         PrintStatus();
+
         if (_gameState.IsGameOver)
         {
             KillYourself();
@@ -87,14 +96,30 @@ public class Game
     // Destructor yazılabilir mi?
     private void KillYourself()
     {
-        
         _gameState = null;
         _rnd = null;
         _encounters.Clear();
         _activeEncounters.Clear();
         Singleton = null;
-        
     }
+
+    private void SetEncounterStack()
+    {
+        var rnd = new Random();
+
+        float totalProbModifier = _activeEncounters.Sum(enc => enc.ProbabilityModifier);
+
+        for (int i = 0; i < stackSize; i++)
+        {
+            float probability = (float)(_rnd.NextDouble() * (totalProbModifier - 0.0f) + 0.0f);
+            _activeEncounters.Sort((x, y) => x.ProbabilityModifier.CompareTo(y.ProbabilityModifier));
+
+            var selectedEncounter = _activeEncounters.SkipWhile(i => i.ProbabilityModifier < probability).First();
+
+            _activeStack.Push(selectedEncounter);
+        }
+    }
+
     private void UnlockEncounters(List<int>? encToUnlock)
     {
         if (encToUnlock != null)
@@ -109,11 +134,9 @@ public class Game
                 {
                     Console.Error.WriteLine($"No such encounter with id {id}");
                 }
-                
             }
         }
     }
-
     public void PrintStatus()
     {
         if (_gameState == null) { Console.Error.WriteLine("GameState is null"); return; }
@@ -132,13 +155,17 @@ public class Game
 
             Console.WriteLine($"---{_gameState.ActiveEncounter.Character}---");
             Console.WriteLine($"{_gameState.ActiveEncounter.Text}\n");
+
             int maxLength = Math.Max(_gameState.ActiveEncounter.yes._text.Length, _gameState.ActiveEncounter.no._text.Length);
             string yesText = new string(_gameState.ActiveEncounter.yes._text);
             string noText = new string(_gameState.ActiveEncounter.no._text);
+
             yesText = yesText.PadRight(maxLength);
             noText = noText.PadRight(maxLength); //⚫ • - -
+
             string yesEffects = getEffectStringOfAction(_gameState.ActiveEncounter.yes);
             string noEffects = getEffectStringOfAction(_gameState.ActiveEncounter.no);
+
             Console.WriteLine($"Player.Left()  for {yesText}     Effects: " + yesEffects);
             Console.WriteLine($"Player.Right() for {noText}     Effects: " + noEffects);
         }
