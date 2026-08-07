@@ -14,7 +14,14 @@ public sealed class Game
     private static Game? _singleton;
     public static Game? Singleton
     {
-        get { return _singleton ?? (new Game()); } 
+        get { 
+            if (_singleton == null)
+            {
+                Console.WriteLine("Please run Game.Start() to initialize the game first");
+                
+            }
+            return _singleton; 
+        } 
         private set {  _singleton = value; } 
     }
 
@@ -38,9 +45,9 @@ public sealed class Game
 
     public static void Start()
     {
-        if (Singleton == null)
+        if (_singleton == null)
         {
-            Singleton = new Game();
+            _singleton = new Game();
             return;
         }
         Console.WriteLine("Game already init");
