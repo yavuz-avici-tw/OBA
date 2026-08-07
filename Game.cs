@@ -11,8 +11,12 @@ public sealed class Game
     private List<Encounter> _activeEncounters;
 
     // GameControlle must be instantiated only once
-    public static Game? Singleton { get; private set; }
-
+    private static Game? _singleton;
+    public static Game? Singleton
+    {
+        get { return _singleton ?? (new Game()); } 
+        private set {  _singleton = value; } 
+    }
 
     private Game()
     {
@@ -22,7 +26,7 @@ public sealed class Game
 
         // selecting random encounter from active ones
         _gameState = new GameState(selectNewEncounter(_activeEncounters,_rnd));
-
+        PrintStatus();
     }
     
     private Encounter selectNewEncounter(List<Encounter> source,Random rnd)
@@ -37,8 +41,6 @@ public sealed class Game
         if (Singleton == null)
         {
             Singleton = new Game();
-            Singleton.PrintStatus();
-
             return;
         }
         Console.WriteLine("Game already init");
@@ -48,7 +50,7 @@ public sealed class Game
     
 
     // Action type can be left or right
-    public void PlayerAction(ActionType actionType)
+    internal void PlayerAction(ActionType actionType)
     {
         if(_gameState== null) { Console.Error.WriteLine("GameState is null"); return; }
         if (_gameState.ActiveEncounter == null) { Console.Error.WriteLine("No active encounter yet"); return; }
