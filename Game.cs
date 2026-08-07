@@ -30,7 +30,7 @@ public sealed class Game
         _date = new DateOnly(1085,3,28);
         PrintStatus();
     }
-    public static Game? initialize()
+    internal static Game? initialize()
     {
         
         if (_singleton == null)
