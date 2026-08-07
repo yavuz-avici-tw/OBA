@@ -1,5 +1,6 @@
 ﻿using OBA;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using static GameState;
 public sealed class Game
 {
@@ -11,7 +12,9 @@ public sealed class Game
     private List<Encounter> _activeEncounters;
     private Stack<Encounter> _activeStack;
     private const int stackSize = 3;
-
+    private int _dayProgress;
+    private DateOnly _date;
+    private CultureInfo _turkishCulture = new CultureInfo("tr-TR");
 
     private static Game? _singleton = null;
     private Game()
@@ -26,7 +29,8 @@ public sealed class Game
         if (_activeStack == null) { Console.Error.WriteLine("ERROR::ACTIVE_STACK_CANNOT_BE_NULL"); return; }
         
         _gameState = new GameState(_activeStack.Pop());
-
+        _dayProgress = 0;
+        _date = new DateOnly(1085,3,28);
         PrintStatus();
     }
     public static Game? initialize()
@@ -63,7 +67,7 @@ public sealed class Game
         bool isOneTimeEncounter = _gameState.ActiveEncounter.IsOneTime;
         if (isOneTimeEncounter)
         {
-            //_encounters.Remove(_gameState.ActiveEncounter);
+            _activeEncounters.Remove(_gameState.ActiveEncounter);
         }
 
         float newFaith = currentAction.statChange.Faith + _gameState.Faith;
@@ -90,7 +94,10 @@ public sealed class Game
         {
             SetEncounterStack();
         }
-
+        int _daysToProgress = _rnd.Next(12, 36);
+        
+        _dayProgress += _daysToProgress;
+        _date = _date.AddDays(_daysToProgress);
         PrintStatus();
 
         if (_gameState.IsGameOver)
@@ -145,6 +152,8 @@ public sealed class Game
 
         Console.WriteLine("---------------------------------------------------");
         Console.WriteLine("-:::STATUS:::-");
+        Console.WriteLine("");
+        Console.WriteLine($"{_date.ToString("D", _turkishCulture)}");
         Console.WriteLine("");
         Console.WriteLine($"İnanç: {_gameState.Faith}/10 | Halk Refahı: {_gameState.People}/10 | Maddi durum: {_gameState.Money}/10 | Oba Güvenliği: {_gameState.Security}/10");
         Console.WriteLine("___________________________________________________");
