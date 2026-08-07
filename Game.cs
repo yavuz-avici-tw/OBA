@@ -13,7 +13,7 @@ public sealed class Game
     private const int stackSize = 3;
 
 
-    private static Game? _singleton;
+    private static Game? _singleton = null;
     private Game()
     {
         _encounters = GameData.getEncountersFromXmlData();
@@ -29,7 +29,7 @@ public sealed class Game
 
         PrintStatus();
     }
-    internal static Game initialize()
+    public static Game? initialize()
     {
         
         if (_singleton == null)
@@ -40,10 +40,10 @@ public sealed class Game
         }
         
         Console.WriteLine("Game already initialized");
-        return _singleton;
+        return null;
     }
     
-    }
+    
 
 
     // Action type can be left or right
@@ -76,8 +76,6 @@ public sealed class Game
 
         ReadOnlyCollection<int>? unlockEncounters = currentAction.unlockEncounters;
 
-        Encounter? nextEncounter = null;
-
         if (fireEncounterId != -1)
         {
             _activeStack.Push(_activeEncounters.FirstOrDefault(enc => enc.Id == fireEncounterId));
@@ -108,6 +106,7 @@ public sealed class Game
         _rnd = null;
         _encounters=null;
         _activeEncounters.Clear();
+        _singleton = null;
 
 
     }
