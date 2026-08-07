@@ -8,10 +8,10 @@ public sealed class Game
     private GameState? _gameState;
 
     // Encounters and active encounters
-    private ReadOnlyCollection<Encounter> _encounters;
+    private ReadOnlyCollection<Encounter>? _encounters;
     private List<Encounter> _activeEncounters;
     private Stack<Encounter> _activeStack;
-    private const int stackSize = 3;
+    private const int stackSize = 5;
     private int _dayProgress;
     private DateOnly _date;
     private CultureInfo _turkishCulture = new CultureInfo("tr-TR");
@@ -20,14 +20,11 @@ public sealed class Game
     private Game()
     {
         _encounters = GameData.getEncountersFromXmlData();
+
         _activeEncounters = _encounters.Where(enc => enc.IsLocked == false && enc.IsContinuation == false).ToList();
         _rnd = new Random();
-        SetEncounterStack();
-
-        // selecting random encounter from active ones
-
-        if (_activeStack == null) { Console.Error.WriteLine("ERROR::ACTIVE_STACK_CANNOT_BE_NULL"); return; }
-        
+        _activeStack = CreateNewEncounterStack();
+                
         _gameState = new GameState(_activeStack.Pop());
         _dayProgress = 0;
         _date = new DateOnly(1085,3,28);
@@ -82,7 +79,11 @@ public sealed class Game
 
         if (fireEncounterId != -1)
         {
-            _activeStack.Push(_activeEncounters.FirstOrDefault(enc => enc.Id == fireEncounterId));
+            Encounter? fireEncounter = _activeEncounters.FirstOrDefault(enc => enc.Id == fireEncounterId);
+            if (fireEncounter != null)
+            {
+                _activeStack.Push(fireEncounter);
+            }
         }
         nextEncounter = _activeStack.Pop();
 
@@ -92,9 +93,9 @@ public sealed class Game
 
         if (_activeStack.Count <= 0)
         {
-            SetEncounterStack();
+            _activeStack = CreateNewEncounterStack();
         }
-        int _daysToProgress = _rnd.Next(12, 36);
+        int _daysToProgress = (_rnd ?? new Random()).Next(12, 36);
         
         _dayProgress += _daysToProgress;
         _date = _date.AddDays(_daysToProgress);
@@ -111,6 +112,7 @@ public sealed class Game
     {
         _gameState = null;
         _rnd = null;
+        
         _encounters=null;
         _activeEncounters.Clear();
         _singleton = null;
@@ -118,13 +120,13 @@ public sealed class Game
 
     }
 
-    private void SetEncounterStack()
+    private Stack<Encounter> CreateNewEncounterStack()
     {
         if (_rnd == null)
         {
             _rnd = new Random();
         }
-        _activeStack = new Stack<Encounter> (WeightedSelector.SelectXUniqueEncountersWithProbabilityModifiers(_activeEncounters, stackSize, _rnd));
+        return new Stack<Encounter> (WeightedSelector.SelectXUniqueEncountersWithProbabilityModifiers(_activeEncounters, stackSize, _rnd));
 
     }
     private void UnlockEncounters(ReadOnlyCollection<int>? encToUnlock)
@@ -133,7 +135,7 @@ public sealed class Game
         {
             foreach (int id in encToUnlock)
             {
-                Encounter? encounter = _encounters.FirstOrDefault(i => i.Id == id);
+                Encounter? encounter = _encounters?.FirstOrDefault(i => i.Id == id);
                 if(encounter != null)
                 {
                     _activeEncounters.Add(encounter);
