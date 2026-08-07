@@ -12,21 +12,8 @@ public sealed class Game
     private Stack<Encounter> _activeStack;
     private const int stackSize = 3;
 
-    // GameControlle must be instantiated only once
-    private static Game? _singleton;
-    public static Game? Singleton
-    {
-        get { 
-            if (_singleton == null)
-            {
-                Console.WriteLine("Please run Game.Start() to initialize the game first");
-                
-            }
-            return _singleton; 
-        } 
-        private set {  _singleton = value; } 
-    }
 
+    private static Game? _singleton;
     private Game()
     {
         _encounters = GameData.getEncountersFromXmlData();
@@ -35,28 +22,35 @@ public sealed class Game
         SetEncounterStack();
 
         // selecting random encounter from active ones
-        //int randNum = _rnd.Next(_activeEncounters.Count);
-        //_gameState = new GameState(_activeEncounters[randNum]);
+
         if (_activeStack == null) { Console.Error.WriteLine("ERROR::ACTIVE_STACK_CANNOT_BE_NULL"); return; }
         
         _gameState = new GameState(_activeStack.Pop());
-    }
 
-    public static void Start()
+        PrintStatus();
+    }
+    internal static Game initialize()
     {
+        
         if (_singleton == null)
         {
             _singleton = new Game();
-            return;
+            return _singleton;
+            
         }
-        Console.WriteLine("Game already init");
-        return;
+        
+        Console.WriteLine("Game already initialized");
+        return _singleton;
+    }
+    
     }
 
+
     // Action type can be left or right
-    internal void PlayerAction(ActionType actionType)
+    public void PlayerAction(ActionType actionType)
     {
-        if(_gameState== null) { Console.Error.WriteLine("GameState is null"); return; }
+        if (_singleton == null) { Console.WriteLine($"Run {nameof(Player)}.{nameof(Player.StartGame)} first to initialize the game"); return; }
+        if (_gameState== null) { Console.Error.WriteLine("GameState is null"); return; }
         if (_gameState.ActiveEncounter == null) { Console.Error.WriteLine("No active encounter yet"); return; }
         Action currentAction = _gameState.ActiveEncounter.TakeAction(actionType);
         if (currentAction == null)
@@ -65,17 +59,21 @@ public sealed class Game
             return;
         }
 
+
         bool isOneTimeEncounter = _gameState.ActiveEncounter.IsOneTime;
         if (isOneTimeEncounter)
         {
             //_encounters.Remove(_gameState.ActiveEncounter);
         }
 
-        float newFaith = currentAction._statChange.Faith + _gameState.Faith;
-        float newPeople = currentAction._statChange.People + _gameState.People;
-        float newMoney = currentAction._statChange.Money + _gameState.Money;
-        float newSecurity = currentAction._statChange.Security + _gameState.Security;
-        int fireEncounterId = currentAction._fireEncounterId;
+        float newFaith = currentAction.statChange.Faith + _gameState.Faith;
+        float newPeople = currentAction.statChange.People + _gameState.People;
+        float newMoney = currentAction.statChange.Money + _gameState.Money;
+        float newSecurity = currentAction.statChange.Security + _gameState.Security;
+        Encounter? nextEncounter = null;
+
+        int fireEncounterId = currentAction.FireEncounterId;
+
         ReadOnlyCollection<int>? unlockEncounters = currentAction.unlockEncounters;
 
         Encounter? nextEncounter = null;
@@ -110,7 +108,8 @@ public sealed class Game
         _rnd = null;
         _encounters=null;
         _activeEncounters.Clear();
-        Singleton = null;
+
+
     }
 
     private void SetEncounterStack()
@@ -120,6 +119,7 @@ public sealed class Game
             _rnd = new Random();
         }
         _activeStack = new Stack<Encounter> (WeightedSelector.SelectXUniqueEncountersWithProbabilityModifiers(_activeEncounters, stackSize, _rnd));
+
     }
     private void UnlockEncounters(ReadOnlyCollection<int>? encToUnlock)
     {
@@ -160,15 +160,15 @@ public sealed class Game
 
             Console.WriteLine($"~{_gameState.ActiveEncounter.Character}:\t\t");
             Console.WriteLine($"->{_gameState.ActiveEncounter.Text}\n");
-            int maxLength = Math.Max(_gameState.ActiveEncounter.yes._text.Length, _gameState.ActiveEncounter.no._text.Length);
-            string yesText = new string(_gameState.ActiveEncounter.yes._text);
-            string noText = new string(_gameState.ActiveEncounter.no._text);
 
+            int maxLength = Math.Max(_gameState.ActiveEncounter.Yes.Text.Length, _gameState.ActiveEncounter.No.Text.Length);
+            string yesText = new string(_gameState.ActiveEncounter.Yes.Text);
+            string noText = new string(_gameState.ActiveEncounter.No.Text);
             yesText = yesText.PadRight(maxLength);
             noText = noText.PadRight(maxLength); //⚫ • - -
+            string yesEffects = getEffectStringOfAction(_gameState.ActiveEncounter.Yes);
+            string noEffects = getEffectStringOfAction(_gameState.ActiveEncounter.No);
 
-            string yesEffects = getEffectStringOfAction(_gameState.ActiveEncounter.yes);
-            string noEffects = getEffectStringOfAction(_gameState.ActiveEncounter.no);
             Console.WriteLine($"Player.Left()\t: {yesText}     Effects: " + yesEffects);
             Console.WriteLine($"Player.Right()\t: {noText}     Effects: " + noEffects);
         }
@@ -181,10 +181,10 @@ public sealed class Game
     }
     private string getEffectStringOfAction(Action action)
     {
-        return getEffectStringOfStat(action._statChange.Faith) +
-            getEffectStringOfStat(action._statChange.People) +
-            getEffectStringOfStat(action._statChange.Money) +
-            getEffectStringOfStat(action._statChange.Security);
+        return getEffectStringOfStat(action.statChange.Faith) +
+            getEffectStringOfStat(action.statChange.People) +
+            getEffectStringOfStat(action.statChange.Money) +
+            getEffectStringOfStat(action.statChange.Security);
     }
     private string getEffectStringOfStat(float stat)
     {

@@ -7,8 +7,8 @@ public class Encounter
     public string Text { get; }
     public bool IsLocked { get; }
     public bool IsContinuation { get; }
-    public Action yes { get; }
-    public Action no { get; }
+    public Action Yes { get; }
+    public Action No { get; }
     public float ProbabilityModifier { get; }
     public bool IsOneTime { get; }
 
@@ -19,8 +19,8 @@ public class Encounter
         Text = text;
         IsLocked = isLocked;
         IsContinuation = isContinuation;
-        this.yes = yes;
-        this.no = no;
+        this.Yes = yes;
+        this.No = no;
         ProbabilityModifier = probabilityModifier;
         IsOneTime = isOneTime;
     }
@@ -29,31 +29,31 @@ public class Encounter
     {
         if (action == ActionType.left)
         {
-            return yes;
+            return Yes;
         }
         else if (action == ActionType.right)
         {
-            return no;
+            return No;
         }
 
         // All code paths need to return a value
-        return yes;
+        return Yes;
     }
 }
 public class Action
 {
-    public string _text { get; }
-    public StatChange _statChange { get; }
-    public int _fireEncounterId { get; }
-    public Encounter? _fireEncounter { get; }
+    public string Text { get; }
+    public StatChange statChange { get; }
+    public int FireEncounterId { get; }
+    public Encounter? FireEncounter { get; }
     public ReadOnlyCollection<int>? unlockEncounters { get; }
 
     public Action(string text, StatChange statChange, int fireEncounterId = -1, Encounter? fireEncounter = null, ReadOnlyCollection<int>? unlockEncounters =null)
     {
-        _text = text;
-        _statChange = statChange;
-        _fireEncounterId = fireEncounterId;
-        _fireEncounter = fireEncounter;
+        Text = text;
+        this.statChange = statChange;
+        FireEncounterId = fireEncounterId;
+        FireEncounter = fireEncounter;
         this.unlockEncounters = unlockEncounters;
         
         
