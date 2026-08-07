@@ -71,6 +71,7 @@ public sealed class Game
         float newPeople = currentAction.statChange.People + _gameState.People;
         float newMoney = currentAction.statChange.Money + _gameState.Money;
         float newSecurity = currentAction.statChange.Security + _gameState.Security;
+        int newDayProgress;
         Encounter? nextEncounter = null;
 
         int fireEncounterId = currentAction.FireEncounterId;
@@ -89,16 +90,19 @@ public sealed class Game
 
         UnlockEncounters(unlockEncounters);
 
-        _gameState.SetState(newFaith, newPeople, newMoney, newSecurity, nextEncounter);
+        int _daysToProgress = (_rnd ?? new Random()).Next(12, 36);
+
+        _date = _date.AddDays(_daysToProgress);
+
+        newDayProgress = _gameState.dayProgress + _daysToProgress;
+
+        _gameState.SetState(newFaith, newPeople, newMoney, newSecurity, nextEncounter, newDayProgress);
 
         if (_activeStack.Count <= 0)
         {
             _activeStack = CreateNewEncounterStack();
         }
-        int _daysToProgress = (_rnd ?? new Random()).Next(12, 36);
-        
-        _dayProgress += _daysToProgress;
-        _date = _date.AddDays(_daysToProgress);
+      
         PrintStatus();
 
         if (_gameState.IsGameOver)

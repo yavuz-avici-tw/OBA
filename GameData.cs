@@ -16,7 +16,8 @@ namespace OBA
             {GameState.GameEndReason.LowMoney, "Hazinede bi' bok kalmadı, ne obana ne kendine yetecek bir şey yok, esnaflar birleşip seni indirme kararı aldılar. Kaybettin"},
             {GameState.GameEndReason.HighMoney,"Zenginliğin etrafındakilerin gözüne batmaya başladı, para ve şöhret hırsıyla seni yerinden etmek isteyenlerin ardı arkası kesilmedi. Kaybettin"},
             {GameState.GameEndReason.LowSecurity, "Beyliğinde güvenlik namına bir şey kalmadı, etrafındaki bütün beylikler pastadan birer parça aldı. Kaybettin."},
-            {GameState.GameEndReason.HighSecurity, "Ordu Başı senin ve gereksiz bürokrasinin sonunu getirmeye karar verdi ve gücü eline aldı. Kaybettin." }
+            {GameState.GameEndReason.HighSecurity, "Ordu Başı senin ve gereksiz bürokrasinin sonunu getirmeye karar verdi ve gücü eline aldı. Kaybettin." },
+            {GameState.GameEndReason.Win, "Halkın önümüzdeki 100 yılı bereket içinde geçirecek." }
 
         }.ToFrozenDictionary();
 

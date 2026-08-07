@@ -11,6 +11,9 @@ public sealed class GameState
     // acitve encounter set etme kısmı tehlikeli GameState'in internalına güvendim
     public Encounter? ActiveEncounter { get; private set; }
 
+    public int dayProgress { get; private set; }
+    private int _winDays = 365 * 5;
+
     public GameState(Encounter activeEncounter, float faith = 5.0F, float people = 5.0f, float money = 5.0f, float security = 5.0f)
     {
         this.Faith = faith;
@@ -19,15 +22,17 @@ public sealed class GameState
         this.Security = security;
         ActiveEncounter = activeEncounter;
         IsGameOver = false;
+        dayProgress = 0;
     }
 
-    internal void SetState(float faith, float people, float money, float security, Encounter? activeEncounter)
+    internal void SetState(float faith, float people, float money, float security, Encounter? activeEncounter, int dayProgress=0)
     {
         this.Faith = faith;
         this.People = people;
         this.Money = money;
         this.Security = security;
         ActiveEncounter = activeEncounter;
+        this.dayProgress = dayProgress;
         CheckIsGameOver();
     }
 
@@ -77,6 +82,11 @@ public sealed class GameState
             IsGameOver = true;gameEndReason = GameEndReason.HighSecurity;
             return;
         }
+        if (dayProgress > _winDays)
+        {
+            IsGameOver = true;gameEndReason = GameEndReason.Win;
+            return;
+        }
     }
     
     public enum GameEndReason
@@ -84,7 +94,7 @@ public sealed class GameState
         LowFaith, HighFaith,
         LowPeople, HighPeople,
         LowMoney, HighMoney,
-        LowSecurity, HighSecurity
-
+        LowSecurity, HighSecurity,
+        Win
     }
 }
