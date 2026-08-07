@@ -109,6 +109,9 @@
 				<SECURITY>0.0</SECURITY>
 				<MONEY>-2.0</MONEY>
 			</STAT_CHANGE>
+			<UNLOCK_ENCOUNTERS>
+				<ENCOUNTER_ID>16<ENCOUNTER_ID>
+			</UNLOCK_ENCOUNTERS>
 			
 			<CONSTRUCTION>construction_temple</CONSTRUCTION>
 		</YES>
@@ -317,7 +320,7 @@
 				<FAITH>0.0</FAITH>
 				<PEOPLE>0.0</PEOPLE>
 				<SECURITY>0.0</SECURITY>
-				<MONEY>-0.5</MONEY>
+				<MONEY>0.5</MONEY>
 			</STAT_CHANGE>
 			
 		</YES>
@@ -377,7 +380,7 @@
 			</STAT_CHANGE>
 		</NO>
 	</ENCOUNTER>
-	<ENCOUNTER id="16">
+	<ENCOUNTER id="16" locked="true">
 		<CHARACTER>ŞAMAN</CHARACTER>
 		<TEXT>Dini turizm bize son zamanlarda iyi gelir sağladı, yatırımı nereye yapalım?</TEXT>
 		<YES>
@@ -561,7 +564,7 @@
 		</NO>
 	</ENCOUNTER>
 
-	<ENCOUNTER id="41131">
+	<ENCOUNTER id="41131" locked="true">
 		<CHARACTER>MÜTTEFİK BEYLİK</CHARACTER>
 		<TEXT>Az uzağımızdaki beylik hali hazırda savaşta, pastadan biz de bir dilim almalıyız.</TEXT>
 		<YES>
