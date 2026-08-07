@@ -1,5 +1,10 @@
 ﻿public static class Player
 {
+    private static Game? game;
+    public static void StartGame()
+    {
+        game = Game.initialize();
+    }
     public static void Left()
     {
         PlayerAction(ActionType.left);
@@ -12,7 +17,7 @@
     }
     private static void PlayerAction(ActionType action)
     {
-        if (Game.Singleton == null) { Console.WriteLine($"Run {nameof(Game)}.{nameof(Game.Start)} first to initialize the game"); return; }
-        Game.Singleton?.PlayerAction(action);
+        if (game == null) { Console.WriteLine($"Run {nameof(Player)}.{nameof(Player.StartGame)} first to initialize the game"); return; }
+        game.PlayerAction(action);
     }
 }
