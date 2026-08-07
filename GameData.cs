@@ -150,7 +150,7 @@ namespace OBA
                 }
             }
             // int fire_y_id = int.Parse(elm.Element("YES")?.Element("FIRE_ENCOUNTER")?.Value);
-            return new Action(text, new StatChange(stat_faith, stat_people, stat_security, stat_money),unlockEncounters:unlockEncountersList.AsReadOnly());
+            return new Action(text, new StatChange(stat_faith, stat_people, stat_security, stat_money),unlockEncounters:unlockEncountersList?.AsReadOnly());
         }
     }
 }

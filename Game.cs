@@ -1,7 +1,7 @@
 ﻿using OBA;
 using System.Collections.ObjectModel;
 using static GameState;
-public class Game
+public sealed class Game
 {
     private Random? _rnd;
     private GameState? _gameState;
@@ -21,10 +21,14 @@ public class Game
         _rnd = new Random();
 
         // selecting random encounter from active ones
-        int randNum = _rnd.Next(_activeEncounters.Count);
-        _gameState = new GameState(_activeEncounters[randNum]);
+        _gameState = new GameState(selectNewEncounter(_activeEncounters,_rnd));
 
-       
+    }
+    
+    private Encounter selectNewEncounter(List<Encounter> source,Random rnd)
+    {
+        int randNum = rnd.Next(source.Count);
+        return source[randNum];
 
     }
 
@@ -44,7 +48,7 @@ public class Game
     
 
     // Action type can be left or right
-    internal void PlayerAction(ActionType actionType)
+    public void PlayerAction(ActionType actionType)
     {
         if(_gameState== null) { Console.Error.WriteLine("GameState is null"); return; }
         if (_gameState.ActiveEncounter == null) { Console.Error.WriteLine("No active encounter yet"); return; }
@@ -70,10 +74,10 @@ public class Game
         }
         else
         {
-            int randNum;
+            
             if(_rnd == null) { _rnd = new Random(); }
-            randNum = _rnd.Next(_activeEncounters.Count);
-            nextEncounter = _activeEncounters[randNum];
+        
+            nextEncounter = selectNewEncounter(_activeEncounters,_rnd);
         }
 
         UnlockEncounters(unlockEncounters);
@@ -115,7 +119,7 @@ public class Game
         }
     }
 
-    public void PrintStatus()
+    private void PrintStatus()
     {
         if (_gameState == null) { Console.Error.WriteLine("GameState is null"); return; }
         if (_gameState.ActiveEncounter == null) { Console.Error.WriteLine("No active encounter yet"); return; }

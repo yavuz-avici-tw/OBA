@@ -1,6 +1,6 @@
 ﻿using OBA;
 
-public class GameState
+public sealed class GameState
 {
     public float Faith { get; private set; }
     public float People { get; private set; }
@@ -21,7 +21,7 @@ public class GameState
         IsGameOver = false;
     }
 
-    internal protected void SetState(float faith, float people, float money, float security, Encounter? activeEncounter)
+    internal void SetState(float faith, float people, float money, float security, Encounter? activeEncounter)
     {
         this.Faith = faith;
         this.People = people;
