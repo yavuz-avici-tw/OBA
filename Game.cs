@@ -126,8 +126,11 @@ public sealed class Game
         if (_gameState == null) { Console.Error.WriteLine("GameState is null"); return; }
         if (_gameState.ActiveEncounter == null) { Console.Error.WriteLine("No active encounter yet"); return; }
 
-        Console.WriteLine("\t_____STATUS____\t");
-        Console.WriteLine($"Faith: {_gameState.Faith}/10 People: {_gameState.People}/10 Money: {_gameState.Money}/10 Security: {_gameState.Security}/10");
+        Console.WriteLine("---------------------------------------------------");
+        Console.WriteLine("-:::STATUS:::-");
+        Console.WriteLine("");
+        Console.WriteLine($"İnanç: {_gameState.Faith}/10 | Halk Refahı: {_gameState.People}/10 | Maddi durum: {_gameState.Money}/10 | Oba Güvenliği: {_gameState.Security}/10");
+        Console.WriteLine("___________________________________________________");
 
         if (_gameState.IsGameOver)
         {
@@ -137,8 +140,8 @@ public sealed class Game
         {
             if (_gameState.ActiveEncounter == null) { Console.Error.WriteLine("No active encounter yet"); return; }
 
-            Console.WriteLine($"---{_gameState.ActiveEncounter.Character}---");
-            Console.WriteLine($"{_gameState.ActiveEncounter.Text}\n");
+            Console.WriteLine($"~{_gameState.ActiveEncounter.Character}:\t\t");
+            Console.WriteLine($"->{_gameState.ActiveEncounter.Text}\n");
             int maxLength = Math.Max(_gameState.ActiveEncounter.yes._text.Length, _gameState.ActiveEncounter.no._text.Length);
             string yesText = new string(_gameState.ActiveEncounter.yes._text);
             string noText = new string(_gameState.ActiveEncounter.no._text);
@@ -146,11 +149,12 @@ public sealed class Game
             noText = noText.PadRight(maxLength); //⚫ • - -
             string yesEffects = getEffectStringOfAction(_gameState.ActiveEncounter.yes);
             string noEffects = getEffectStringOfAction(_gameState.ActiveEncounter.no);
-            Console.WriteLine($"Player.Left()  for {yesText}     Effects: " + yesEffects);
-            Console.WriteLine($"Player.Right() for {noText}     Effects: " + noEffects);
+            Console.WriteLine($"Player.Left()\t: {yesText}     Effects: " + yesEffects);
+            Console.WriteLine($"Player.Right()\t: {noText}     Effects: " + noEffects);
         }
 
     }
+
     private void PrintGameOver(GameEndReason endReason)
     {
         Console.WriteLine(GameData.GameEndReasonTexts[endReason]);
